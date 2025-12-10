@@ -1,0 +1,723 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Eoghan Russell | Creative Developer</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&family=Space+Grotesk:wght@300;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <style>
+        /* =========================================
+           1. CSS VARIABLES & THEME SETUP
+           ========================================= */
+        :root {
+            /* Default Dark Mode Palette */
+            --bg-color: #0f1115;
+            --bg-secondary: #161920;
+            --text-main: #f0f2f5;
+            --text-muted: #94a3b8;
+            
+            /* The "Electric Blue" Accent */
+            --accent-main: #38bdf8; 
+            --accent-glow: rgba(56, 189, 248, 0.4);
+            
+            /* Glassmorphism */
+            --glass-bg: rgba(255, 255, 255, 0.03);
+            --glass-border: rgba(255, 255, 255, 0.08);
+            --shadow-soft: 0 10px 40px -10px rgba(0,0,0,0.5);
+            
+            /* UI Kit */
+            --radius-sm: 8px;
+            --radius-md: 16px;
+            --radius-lg: 24px;
+            --font-head: 'Space Grotesk', sans-serif;
+            --font-body: 'Outfit', sans-serif;
+            --nav-height: 80px;
+        }
+
+        /* Light Mode Overrides */
+        [data-theme="light"] {
+            --bg-color: #f8fafc;
+            --bg-secondary: #ffffff;
+            --text-main: #1e293b;
+            --text-muted: #64748b;
+            
+            --accent-main: #0284c7; 
+            --accent-glow: rgba(2, 132, 199, 0.3);
+            
+            --glass-bg: rgba(255, 255, 255, 0.6);
+            --glass-border: rgba(0, 0, 0, 0.08);
+            --shadow-soft: 0 10px 30px -10px rgba(0,0,0,0.1);
+        }
+
+        /* =========================================
+           2. GLOBAL RESET & UTILITIES
+           ========================================= */
+        * { margin: 0; padding: 0; box-sizing: border-box; scroll-behavior: smooth; cursor: none; /* Hide default cursor */ }
+        
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            font-family: var(--font-body);
+            overflow-x: hidden;
+            transition: background-color 0.4s ease, color 0.4s ease;
+        }
+        
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: var(--bg-color); }
+        ::-webkit-scrollbar-thumb { background: var(--accent-main); border-radius: 4px; }
+
+        h1, h2, h3 { font-family: var(--font-head); line-height: 1.1; }
+        a { text-decoration: none; color: inherit; transition: 0.3s; }
+        ul { list-style: none; }
+
+        /* Utility Classes */
+        .glass {
+            background: var(--glass-bg);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid var(--glass-border);
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+        }
+        .container { max-width: 1200px; margin: 0 auto; padding: 0 20px; }
+        .section-padding { padding: 100px 0; }
+        .text-gradient {
+            background: linear-gradient(135deg, var(--text-main), var(--accent-main));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        /* =========================================
+           3. CUSTOM CURSOR & SCROLL PROGRESS
+           ========================================= */
+        .cursor-dot {
+            position: fixed; top: 0; left: 0; transform: translate(-50%, -50%);
+            border-radius: 50%; z-index: 9999; pointer-events: none;
+            width: 10px; height: 10px; background-color: var(--accent-main);
+            box-shadow: 0 0 10px var(--accent-main);
+            transition: width 0.2s, height 0.2s;
+        }
+        
+        /* Hover state for cursor */
+        body.hovering .cursor-dot {
+            width: 20px; height: 20px; opacity: 0.8;
+        }
+        
+        /* Scroll Progress Bar */
+        .scroll-progress {
+            position: fixed; top: 0; left: 0; height: 3px; background: var(--accent-main);
+            width: 0%; z-index: 1001; transition: width 0.1s;
+        }
+
+        /* =========================================
+           4. NAVIGATION
+           ========================================= */
+        .navbar {
+            position: fixed; top: 0; left: 0; width: 100%; height: var(--nav-height);
+            z-index: 1000; transition: 0.4s; display: flex; align-items: center;
+        }
+        .navbar.scrolled {
+            height: 70px;
+            background: var(--bg-secondary); border-bottom: 1px solid var(--glass-border); opacity: 0.95;
+        }
+        .nav-container { display: flex; justify-content: space-between; align-items: center; width: 100%; }
+        .logo { font-size: 1.5rem; font-weight: 700; letter-spacing: -1px; }
+        
+        .nav-links { display: flex; gap: 30px; align-items: center; }
+        .nav-link { position: relative; font-weight: 500; font-size: 0.95rem; color: var(--text-muted); }
+        .nav-link:hover { color: var(--accent-main); }
+        
+        /* Nav Actions (CV + Theme) */
+        .nav-actions { display: flex; align-items: center; gap: 15px; }
+
+        .btn-cv {
+            padding: 8px 20px; border: 1px solid var(--glass-border); background: var(--glass-bg);
+            border-radius: 50px; font-size: 0.9rem; display: flex; align-items: center; gap: 8px;
+            transition: 0.3s; color: var(--text-main); font-weight: 500;
+        }
+        .btn-cv:hover { border-color: var(--accent-main); color: var(--accent-main); background: rgba(56, 189, 248, 0.1); }
+
+        .theme-toggle {
+            cursor: pointer; padding: 10px; border-radius: 50%;
+            background: var(--glass-bg); border: 1px solid var(--glass-border);
+            color: var(--text-main); transition: 0.3s;
+        }
+        .theme-toggle:hover { background: var(--accent-main); color: #fff; }
+
+        /* =========================================
+           5. HERO SECTION
+           ========================================= */
+        .hero {
+            position: relative; min-height: 100vh; display: flex; align-items: center;
+            overflow: hidden; padding-top: var(--nav-height);
+        }
+        #particles-js { position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: -1; }
+        
+        .hero-content {
+            display: flex; justify-content: space-between; align-items: center; gap: 50px; width: 100%;
+        }
+        .hero-text { flex: 0 0 50%; } 
+        .hero-visual { flex: 0 0 45%; position: relative; perspective: 1000px; }
+        
+        .hero-text h1 { font-size: 4.5rem; margin-bottom: 20px; min-height: 160px; }
+        .typewriter { border-right: 3px solid var(--accent-main); padding-right: 5px; animation: blink 0.7s infinite; }
+        
+        .tilt-card {
+            width: 100%; height: 500px;
+            background: linear-gradient(135deg, var(--bg-secondary), var(--bg-color));
+            border-radius: var(--radius-lg); display: flex; align-items: center; justify-content: center;
+            transform-style: preserve-3d; box-shadow: var(--shadow-soft); border: 1px solid var(--glass-border);
+        }
+        .tilt-card-inner { transform: translateZ(50px); text-align: center; }
+        .tilt-icon { font-size: 5rem; color: var(--accent-main); margin-bottom: 20px; }
+        
+        .btn {
+            padding: 12px 30px; border-radius: 50px; font-weight: 600; cursor: pointer;
+            border: none; transition: 0.3s; display: inline-flex; align-items: center; gap: 10px;
+        }
+        .btn-primary { background: var(--accent-main); color: #fff; }
+        [data-theme="dark"] .btn-primary { color: #000; }
+        .btn-primary:hover { box-shadow: 0 0 20px var(--accent-glow); transform: translateY(-2px); }
+        .btn-outline { background: transparent; border: 1px solid var(--accent-main); color: var(--accent-main); margin-left: 15px; }
+
+        /* =========================================
+           6. INFINITE MARQUEE
+           ========================================= */
+        .marquee-section { padding: 40px 0; background: var(--bg-secondary); overflow: hidden; border-top: 1px solid var(--glass-border); border-bottom: 1px solid var(--glass-border); }
+        .marquee-content { display: flex; gap: 50px; animation: scroll 20s linear infinite; width: max-content; }
+        .marquee-item { font-size: 1.5rem; font-weight: 600; color: var(--text-muted); display: flex; align-items: center; gap: 10px; opacity: 0.7; }
+        .marquee-item i { color: var(--accent-main); }
+        
+        @keyframes scroll { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
+
+        /* =========================================
+           7. PROJECTS
+           ========================================= */
+        .projects-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 30px; }
+        .project-card { height: 400px; perspective: 1000px; cursor: pointer; }
+        .project-inner {
+            position: relative; width: 100%; height: 100%; text-align: center;
+            transition: transform 0.8s; transform-style: preserve-3d;
+        }
+        .project-card:hover .project-inner { transform: rotateY(180deg); }
+        .project-front, .project-back {
+            position: absolute; width: 100%; height: 100%; -webkit-backface-visibility: hidden; backface-visibility: hidden;
+            border-radius: var(--radius-md); overflow: hidden;
+        }
+        .project-front {
+            background: var(--bg-secondary); border: 1px solid var(--glass-border);
+            display: flex; flex-direction: column; justify-content: center; align-items: center;
+        }
+        .project-back {
+            background: var(--accent-main); color: #fff; transform: rotateY(180deg);
+            display: flex; flex-direction: column; justify-content: center; align-items: center; padding: 20px;
+        }
+        [data-theme="dark"] .project-back { color: #000; }
+        .project-icon { font-size: 3rem; margin-bottom: 20px; color: var(--accent-main); }
+        .project-front .project-icon { background: var(--glass-bg); padding: 20px; border-radius: 50%; }
+
+        /* =========================================
+           8. TIMELINE
+           ========================================= */
+        .timeline-wrapper { position: relative; max-width: 800px; margin: 0 auto; }
+        .timeline-line {
+            position: absolute; left: 50%; top: 0; bottom: 0; width: 2px;
+            background: var(--glass-border); transform: translateX(-50%);
+        }
+        .timeline-item {
+            position: relative; margin-bottom: 50px; width: 50%; padding: 0 40px;
+            opacity: 0; transform: translateY(30px); transition: 0.6s;
+        }
+        .timeline-item.show { opacity: 1; transform: translateY(0); }
+        .timeline-item:nth-child(odd) { left: 0; text-align: right; }
+        .timeline-item:nth-child(even) { left: 50%; }
+        .timeline-dot {
+            position: absolute; top: 0; width: 16px; height: 16px; background: var(--accent-main);
+            border-radius: 50%; box-shadow: 0 0 10px var(--accent-main);
+        }
+        .timeline-item:nth-child(odd) .timeline-dot { right: -8px; }
+        .timeline-item:nth-child(even) .timeline-dot { left: -8px; }
+
+        /* =========================================
+           9. WIDGETS (Chat)
+           ========================================= */
+        /* Chat Trigger */
+        .chat-trigger {
+            position: fixed; bottom: 30px; right: 30px; width: 60px; height: 60px;
+            background: var(--accent-main); border-radius: 50%; display: flex;
+            align-items: center; justify-content: center; font-size: 1.5rem; color: #fff;
+            cursor: pointer; box-shadow: 0 10px 20px rgba(0,0,0,0.3); z-index: 1500; transition: 0.3s;
+        }
+        [data-theme="dark"] .chat-trigger { color: #000; }
+        .chat-trigger:hover { transform: scale(1.1) rotate(10deg); }
+        
+        /* Chat Window */
+        .chat-window {
+            position: fixed; bottom: 100px; right: 30px; width: 300px; height: 400px;
+            background: var(--bg-secondary); border: 1px solid var(--glass-border);
+            border-radius: var(--radius-md); z-index: 1500; display: none; flex-direction: column;
+            box-shadow: var(--shadow-soft); overflow: hidden;
+        }
+        .chat-header { background: var(--glass-bg); padding: 15px; border-bottom: 1px solid var(--glass-border); }
+        .chat-body { flex: 1; padding: 15px; overflow-y: auto; font-size: 0.9rem; }
+        .chat-msg { background: var(--glass-bg); padding: 8px 12px; border-radius: 10px; margin-bottom: 10px; display: inline-block; }
+        .chat-msg.bot { border-top-left-radius: 0; border: 1px solid var(--glass-border); }
+        .chat-input-area { padding: 10px; border-top: 1px solid var(--glass-border); display: flex; }
+        .chat-input { flex: 1; background: transparent; border: none; color: var(--text-main); outline: none; }
+
+        /* =========================================
+           10. CONTACT & FOOTER (MATRIX)
+           ========================================= */
+        .contact-form { max-width: 600px; margin: 0 auto; }
+        .input-group { position: relative; margin-bottom: 30px; }
+        .input-field {
+            width: 100%; padding: 15px; background: var(--glass-bg); border: 1px solid var(--glass-border);
+            border-radius: var(--radius-sm); color: var(--text-main); font-family: var(--font-body);
+        }
+        .input-field:focus { border-color: var(--accent-main); outline: none; }
+        
+        footer {
+            position: relative; padding: 50px 0; text-align: center; border-top: 1px solid var(--glass-border); 
+            margin-top: 100px; overflow: hidden;
+        }
+        #matrix-canvas {
+            position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 0; opacity: 0.1;
+        }
+        .footer-content { position: relative; z-index: 1; }
+
+        /* Keyframes */
+        @keyframes blink { 50% { border-color: transparent; } }
+
+        /* Mobile Responsive */
+        @media (max-width: 900px) {
+            * { cursor: default; } /* Reset cursor on touch */
+            .cursor-dot { display: none; }
+            .hero-content { flex-direction: column; text-align: center; }
+            .hero-text { flex: auto; order: 1; }
+            .hero-visual { display: none; }
+            .hero-text h1 { font-size: 3rem; min-height: auto; }
+            
+            /* Navbar Mobile */
+            .nav-links { display: none; } /* Hide the text links */
+            /* nav-actions (CV and Toggle) remain visible */
+            .nav-actions { margin-left: auto; } 
+            
+            .timeline-item { width: 100%; left: 0 !important; text-align: left !important; padding-left: 30px; }
+            .timeline-line { left: 10px; }
+            .timeline-dot { left: 2px !important; }
+        }
+    </style>
+</head>
+<body id="top" data-theme="dark">
+
+    <div class="cursor-dot" data-cursor-dot></div>
+    
+    <div class="scroll-progress" id="scrollProgress"></div>
+
+    <nav class="navbar glass">
+        <div class="container nav-container">
+            <a href="#" class="logo">EOGHAN<span style="color:var(--accent-main)">.</span></a>
+            
+            <ul class="nav-links">
+                <li><a href="#projects" class="nav-link">Work</a></li>
+                <li><a href="#about" class="nav-link">Journey</a></li>
+                <li><a href="#contact" class="nav-link">Contact</a></li>
+            </ul>
+
+            <div class="nav-actions">
+                <a href="CV_Eoghan_Russell.pdf" class="btn-cv" download><i class="fas fa-download"></i> CV</a>
+                
+                <div class="theme-toggle" id="theme-btn">
+                    <i class="fas fa-sun"></i>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <section class="hero">
+        <canvas id="particles-js"></canvas>
+        <div class="container hero-content">
+            <div class="hero-text">
+                <p>HELLO, </p>
+                <h1>I Am <span class="text-gradient" id="typewriter"></span><span class="typewriter"></span></h1>
+                <p>Crafting award-winning digital experiences with a focus on motion, aesthetics, and interaction.</p><br>
+                <div class="cta-group">
+                    <a href="#projects" class="btn btn-primary">View Work <i class="fas fa-arrow-right"></i></a>
+                    <a href="#contact" class="btn btn-outline">Contact Me</a>
+                </div>
+            </div>
+            <div class="hero-visual">
+                <div class="tilt-card glass" id="tiltCard">
+                    <div class="tilt-card-inner">
+                        <i class="fas fa-layer-group tilt-icon"></i>
+                        <h3>Interactive Design</h3>
+                        <p style="color:var(--text-muted); margin-top:10px;">Move your mouse over me</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <div class="marquee-section">
+        <div class="marquee-content">
+            <div class="marquee-item"><i class="fab fa-react"></i> React</div>
+            <div class="marquee-item"><i class="fab fa-js"></i> JavaScript</div>
+            <div class="marquee-item"><i class="fab fa-html5"></i> HTML5</div>
+            <div class="marquee-item"><i class="fab fa-css3"></i> CSS3</div>
+            <div class="marquee-item"><i class="fab fa-node"></i> Node.js</div>
+            <div class="marquee-item"><i class="fab fa-figma"></i> Figma</div>
+            <div class="marquee-item"><i class="fab fa-aws"></i> AWS</div>
+            <div class="marquee-item"><i class="fab fa-python"></i> Python</div>
+            <div class="marquee-item"><i class="fab fa-react"></i> React</div>
+            <div class="marquee-item"><i class="fab fa-js"></i> JavaScript</div>
+            <div class="marquee-item"><i class="fab fa-html5"></i> HTML5</div>
+            <div class="marquee-item"><i class="fab fa-css3"></i> CSS3</div>
+            <div class="marquee-item"><i class="fab fa-node"></i> Node.js</div>
+            <div class="marquee-item"><i class="fab fa-figma"></i> Figma</div>
+            <div class="marquee-item"><i class="fab fa-aws"></i> AWS</div>
+            <div class="marquee-item"><i class="fab fa-python"></i> Python</div>
+        </div>
+    </div>
+
+    <section id="projects" class="section-padding">
+        <div class="container">
+            <div class="section-header">
+                <h2>Selected Works</h2>
+                <p style="color:var(--text-muted)">Hover to reveal details</p>
+            </div>
+            <div class="projects-grid">
+                <div class="project-card">
+                    <div class="project-inner">
+                        <div class="project-front glass">
+                            <i class="fas fa-laptop-code project-icon"></i>
+                            <h3>Fintech Dashboard</h3>
+                            <p style="color:var(--text-muted)">React • D3.js</p>
+                        </div>
+                        <div class="project-back">
+                            <h3>Fintech Dashboard</h3>
+                            <p>A real-time analytics platform dealing with millions of data points.</p>
+                            <button class="btn" style="background:#fff; color:#000; margin-top:20px;">View Case Study</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="project-card">
+                    <div class="project-inner">
+                        <div class="project-front glass">
+                            <i class="fas fa-mobile-alt project-icon"></i>
+                            <h3>Neobank App</h3>
+                            <p style="color:var(--text-muted)">Flutter • Firebase</p>
+                        </div>
+                        <div class="project-back">
+                            <h3>Neobank App</h3>
+                            <p>Award-winning mobile interface designed for Gen Z investors.</p>
+                            <button class="btn" style="background:#fff; color:#000; margin-top:20px;">View Case Study</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="project-card">
+                    <div class="project-inner">
+                        <div class="project-front glass">
+                            <i class="fas fa-vr-cardboard project-icon"></i>
+                            <h3>VR Experience</h3>
+                            <p style="color:var(--text-muted)">Unity • C#</p>
+                        </div>
+                        <div class="project-back">
+                            <h3>VR Experience</h3>
+                            <p>Immersive architectural visualization for luxury real estate.</p>
+                            <button class="btn" style="background:#fff; color:#000; margin-top:20px;">View Case Study</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="about" class="section-padding" style="background: var(--bg-secondary);">
+        <div class="container">
+            <div class="section-header">
+                <h2>My Journey</h2>
+            </div>
+            <div class="timeline-wrapper">
+                <div class="timeline-line"></div>
+                <div class="timeline-item">
+                    <div class="timeline-dot"></div>
+                    <h3>Senior Frontend Engineer</h3>
+                    <span style="color:var(--accent-main)">2023 - Present</span>
+                    <p style="margin-top:10px; color:var(--text-muted)">Leading a team of 5 developers to build scalable SaaS products.</p>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-dot"></div>
+                    <h3>Full Stack Developer</h3>
+                    <span style="color:var(--accent-main)">2021 - 2023</span>
+                    <p style="margin-top:10px; color:var(--text-muted)">Developed REST APIs and React frontends for E-commerce clients.</p>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-dot"></div>
+                    <h3>UI/UX Designer</h3>
+                    <span style="color:var(--accent-main)">2019 - 2021</span>
+                    <p style="margin-top:10px; color:var(--text-muted)">Designed interfaces for Fortune 500 clients at a top digital agency.</p>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-dot"></div>
+                    <h3>Junior Web Developer</h3>
+                    <span style="color:var(--accent-main)">2018 - 2019</span>
+                    <p style="margin-top:10px; color:var(--text-muted)">Assisted in maintaining legacy codebases and bug fixing.</p>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-dot"></div>
+                    <h3>Computer Science Degree</h3>
+                    <span style="color:var(--accent-main)">2014 - 2018</span>
+                    <p style="margin-top:10px; color:var(--text-muted)">Specialized in Human-Computer Interaction and Web Technologies.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="contact" class="section-padding">
+        <div class="container">
+            <div class="section-header">
+                <h2>Let's Collaborate</h2>
+            </div>
+            
+            <form action="https://formspree.io/f/YOUR_FORMSPREE_ID_HERE" method="POST" class="contact-form glass" style="padding:40px; border-radius:var(--radius-md);">
+                <div class="input-group">
+                    <input type="text" name="name" class="input-field" placeholder="Name" required>
+                </div>
+                <div class="input-group">
+                    <input type="email" name="email" class="input-field" placeholder="Email" required>
+                </div>
+                <div class="input-group">
+                    <textarea name="message" class="input-field" rows="5" placeholder="Message" required></textarea>
+                </div>
+                <button type="submit" class="btn btn-primary">Send Message</button>
+            </form>
+
+        </div>
+    </section>
+
+    <footer>
+        <canvas id="matrix-canvas"></canvas>
+        <div class="container footer-content">
+            <p style="color:var(--text-muted)">&copy; 2024 Eoghan Russell. Crafted with Precision.</p>
+            <div style="margin-top:20px; font-size:1.2rem;">
+                <i class="fab fa-github" style="margin:0 10px;"></i>
+                <i class="fab fa-linkedin" style="margin:0 10px;"></i>
+                <i class="fab fa-twitter" style="margin:0 10px;"></i>
+            </div>
+        </div>
+    </footer>
+
+    <div class="chat-trigger" id="chatTrigger">
+        <i class="fas fa-comment-dots"></i>
+    </div>
+    <div class="chat-window" id="chatWindow">
+        <div class="chat-header">
+            <h4>Mini-Eoghan AI</h4>
+        </div>
+        <div class="chat-body" id="chatBody">
+            <div class="chat-msg bot">Hi! I'm Eoghan's digital assistant. How can I help?</div>
+        </div>
+        <div class="chat-input-area">
+            <input type="text" class="chat-input" placeholder="Type here..." id="chatInput">
+            <i class="fas fa-paper-plane" style="color:var(--accent-main); cursor:pointer;" id="sendBtn"></i>
+        </div>
+    </div>
+
+    <script>
+        // --- 1. CUSTOM CURSOR & HOVER EFFECTS ---
+        const cursorDot = document.querySelector('[data-cursor-dot]');
+        
+        window.addEventListener('mousemove', function(e) {
+            const posX = e.clientX;
+            const posY = e.clientY;
+            
+            // Dot follows instantly
+            cursorDot.style.left = `${posX}px`;
+            cursorDot.style.top = `${posY}px`;
+        });
+
+        // Add magnetic/hover effect to all clickable elements
+        const clickables = document.querySelectorAll('a, button, .chat-trigger, .project-card, .theme-toggle');
+        clickables.forEach(el => {
+            el.addEventListener('mouseenter', () => document.body.classList.add('hovering'));
+            el.addEventListener('mouseleave', () => document.body.classList.remove('hovering'));
+        });
+
+        // --- 2. SCROLL PROGRESS BAR ---
+        window.addEventListener('scroll', () => {
+            const winScroll = document.body.scrollTop || document.documentElement.scrollTop;
+            const height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+            const scrolled = (winScroll / height) * 100;
+            document.getElementById("scrollProgress").style.width = scrolled + "%";
+            
+            // Navbar Glass Effect
+            const nav = document.querySelector('.navbar');
+            if(window.scrollY > 50) nav.classList.add('scrolled');
+            else nav.classList.remove('scrolled');
+        });
+
+        // --- 3. THEME SWITCHER ---
+        const themeBtn = document.getElementById('theme-btn');
+        const body = document.body;
+        // Initialize Icon
+        if(body.getAttribute('data-theme') === 'light') { themeBtn.innerHTML = '<i class="fas fa-moon"></i>'; } 
+        else { themeBtn.innerHTML = '<i class="fas fa-sun"></i>'; }
+
+        themeBtn.addEventListener('click', () => {
+            const currentTheme = body.getAttribute('data-theme');
+            if(currentTheme === 'light') {
+                body.setAttribute('data-theme', 'dark');
+                themeBtn.innerHTML = '<i class="fas fa-sun"></i>';
+            } else {
+                body.setAttribute('data-theme', 'light');
+                themeBtn.innerHTML = '<i class="fas fa-moon"></i>';
+            }
+        });
+
+        // --- 4. TYPEWRITER ---
+        const words = ["Eoghan Russell", "Web Applications", "Interactive UIs"];
+        let i = 0;
+        function typeWriter() {
+            const heading = document.getElementById('typewriter');
+            const word = words[i];
+            let c = 0;
+            const type = () => {
+                if (c < word.length) {
+                    heading.innerHTML += word.charAt(c);
+                    c++;
+                    setTimeout(type, 100);
+                } else { setTimeout(erase, 2000); }
+            };
+            const erase = () => {
+                if (c > 0) {
+                    heading.innerHTML = word.substring(0, c-1);
+                    c--;
+                    setTimeout(erase, 50);
+                } else {
+                    i = (i + 1) % words.length;
+                    type();
+                }
+            };
+            type();
+        }
+        typeWriter();
+
+        // --- 5. 3D TILT EFFECT ---
+        const card = document.getElementById('tiltCard');
+        document.addEventListener('mousemove', (e) => {
+            if(window.innerWidth < 900) return;
+            const x = (window.innerWidth / 2 - e.pageX) / 25;
+            const y = (window.innerHeight / 2 - e.pageY) / 25;
+            card.style.transform = `rotateY(${x}deg) rotateX(${y}deg)`;
+        });
+
+        // --- 6. SCROLL OBSERVER ---
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if(entry.isIntersecting) entry.target.classList.add('show');
+            });
+        });
+        document.querySelectorAll('.timeline-item').forEach(el => observer.observe(el));
+
+        // --- 7. PARTICLES (HEADER) ---
+        const pCanvas = document.getElementById('particles-js');
+        const pCtx = pCanvas.getContext('2d');
+        pCanvas.width = window.innerWidth;
+        pCanvas.height = window.innerHeight;
+        let particles = [];
+
+        class Particle {
+            constructor() {
+                this.x = Math.random() * pCanvas.width;
+                this.y = Math.random() * pCanvas.height;
+                this.size = Math.random() * 2;
+                this.speedX = Math.random() * 1 - 0.5;
+                this.speedY = Math.random() * 1 - 0.5;
+            }
+            update() {
+                this.x += this.speedX;
+                this.y += this.speedY;
+                if(this.x > pCanvas.width || this.x < 0) this.speedX *= -1;
+                if(this.y > pCanvas.height || this.y < 0) this.speedY *= -1;
+            }
+            draw() {
+                const isLight = document.body.getAttribute('data-theme') === 'light';
+                pCtx.fillStyle = isLight ? 'rgba(2, 132, 199, 0.2)' : 'rgba(56, 189, 248, 0.2)';
+                pCtx.beginPath();
+                pCtx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+                pCtx.fill();
+            }
+        }
+        function initParticles() {
+            particles = [];
+            for(let j=0; j<50; j++) particles.push(new Particle());
+        }
+        function animateParticles() {
+            pCtx.clearRect(0,0, pCanvas.width, pCanvas.height);
+            particles.forEach(p => { p.update(); p.draw(); });
+            requestAnimationFrame(animateParticles);
+        }
+        initParticles();
+        animateParticles();
+
+        // --- 8. MATRIX RAIN (FOOTER) ---
+        const mCanvas = document.getElementById('matrix-canvas');
+        const mCtx = mCanvas.getContext('2d');
+        mCanvas.width = window.innerWidth;
+        mCanvas.height = 300; // Footer height approx
+        
+        const letters = "01010101ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+        const fontSize = 14;
+        const columns = mCanvas.width / fontSize;
+        const drops = Array(Math.floor(columns)).fill(1);
+
+        function drawMatrix() {
+            // Semi-transparent black to create trail effect
+            const isLight = document.body.getAttribute('data-theme') === 'light';
+            mCtx.fillStyle = isLight ? 'rgba(248, 250, 252, 0.1)' : 'rgba(15, 17, 21, 0.1)';
+            mCtx.fillRect(0, 0, mCanvas.width, mCanvas.height);
+            
+            mCtx.fillStyle = isLight ? '#0284c7' : '#0F0'; // Green usually, but let's stick to theme (Blue)
+            if(!isLight) mCtx.fillStyle = '#38bdf8'; // Electric blue for dark mode
+
+            mCtx.font = fontSize + "px monospace";
+            for(let k=0; k<drops.length; k++) {
+                const text = letters.charAt(Math.floor(Math.random()*letters.length));
+                mCtx.fillText(text, k*fontSize, drops[k]*fontSize);
+                if(drops[k]*fontSize > mCanvas.height && Math.random() > 0.975) drops[k] = 0;
+                drops[k]++;
+            }
+        }
+        setInterval(drawMatrix, 50);
+
+        // --- 9. CHAT WIDGET ---
+        const chatTrigger = document.getElementById('chatTrigger');
+        const chatWindow = document.getElementById('chatWindow');
+        chatTrigger.addEventListener('click', () => {
+            chatWindow.style.display = chatWindow.style.display === 'flex' ? 'none' : 'flex';
+        });
+        document.getElementById('sendBtn').addEventListener('click', () => {
+            const input = document.getElementById('chatInput');
+            if(input.value.trim() === '') return;
+            const chatBody = document.getElementById('chatBody');
+            chatBody.innerHTML += `<div class="chat-msg" style="align-self:flex-end; background:var(--accent-main); color:#fff;">${input.value}</div>`;
+            input.value = '';
+            setTimeout(() => {
+                chatBody.innerHTML += `<div class="chat-msg bot">Thanks for reaching out! Eoghan will see this message soon.</div>`;
+                chatBody.scrollTop = chatBody.scrollHeight;
+            }, 1000);
+        });
+        
+        // Handle Resize
+        window.addEventListener('resize', () => {
+            pCanvas.width = window.innerWidth;
+            pCanvas.height = window.innerHeight;
+            mCanvas.width = window.innerWidth;
+            initParticles();
+        });
+    </script>
+</body>
+</html>

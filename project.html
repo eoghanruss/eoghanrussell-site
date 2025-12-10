@@ -1,0 +1,407 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fintech Dashboard | Case Study</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&family=Space+Grotesk:wght@300;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <style>
+        /* =========================================
+           1. SHARED THEME & VARIABLES (Identical to Home)
+           ========================================= */
+        :root {
+            --bg-color: #0f1115;
+            --bg-secondary: #161920;
+            --text-main: #f0f2f5;
+            --text-muted: #94a3b8;
+            --accent-main: #38bdf8; 
+            --accent-glow: rgba(56, 189, 248, 0.4);
+            --glass-bg: rgba(255, 255, 255, 0.03);
+            --glass-border: rgba(255, 255, 255, 0.08);
+            --shadow-soft: 0 10px 40px -10px rgba(0,0,0,0.5);
+            --radius-sm: 8px;
+            --radius-md: 16px;
+            --radius-lg: 24px;
+            --font-head: 'Space Grotesk', sans-serif;
+            --font-body: 'Outfit', sans-serif;
+            --nav-height: 80px;
+        }
+
+        [data-theme="light"] {
+            --bg-color: #f8fafc;
+            --bg-secondary: #ffffff;
+            --text-main: #1e293b;
+            --text-muted: #64748b;
+            --accent-main: #0284c7; 
+            --accent-glow: rgba(2, 132, 199, 0.3);
+            --glass-bg: rgba(255, 255, 255, 0.6);
+            --glass-border: rgba(0, 0, 0, 0.08);
+            --shadow-soft: 0 10px 30px -10px rgba(0,0,0,0.1);
+        }
+
+        /* =========================================
+           2. GLOBAL UTILITIES
+           ========================================= */
+        * { margin: 0; padding: 0; box-sizing: border-box; scroll-behavior: smooth; cursor: none; }
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            font-family: var(--font-body);
+            overflow-x: hidden;
+            transition: background-color 0.4s ease, color 0.4s ease;
+        }
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: var(--bg-color); }
+        ::-webkit-scrollbar-thumb { background: var(--accent-main); border-radius: 4px; }
+        h1, h2, h3, h4 { font-family: var(--font-head); line-height: 1.2; }
+        p { line-height: 1.7; margin-bottom: 20px; color: var(--text-muted); }
+        a { text-decoration: none; color: inherit; transition: 0.3s; }
+        
+        .container { max-width: 1000px; margin: 0 auto; padding: 0 20px; }
+        .glass {
+            background: var(--glass-bg); backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px); border: 1px solid var(--glass-border);
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+        }
+
+        /* =========================================
+           3. CURSOR & NAV (Identical)
+           ========================================= */
+        .cursor-dot {
+            position: fixed; top: 0; left: 0; transform: translate(-50%, -50%);
+            border-radius: 50%; z-index: 9999; pointer-events: none;
+            width: 10px; height: 10px; background-color: var(--accent-main);
+            box-shadow: 0 0 10px var(--accent-main); transition: width 0.2s, height 0.2s;
+        }
+        body.hovering .cursor-dot { width: 20px; height: 20px; opacity: 0.8; }
+        .scroll-progress {
+            position: fixed; top: 0; left: 0; height: 3px; background: var(--accent-main);
+            width: 0%; z-index: 1001; transition: width 0.1s;
+        }
+
+        .navbar {
+            position: fixed; top: 0; left: 0; width: 100%; height: var(--nav-height);
+            z-index: 1000; transition: 0.4s; display: flex; align-items: center;
+        }
+        .navbar.scrolled {
+            height: 70px; background: var(--bg-secondary);
+            border-bottom: 1px solid var(--glass-border); opacity: 0.95;
+        }
+        .nav-container { display: flex; justify-content: space-between; align-items: center; width: 100%; }
+        .logo { font-size: 1.5rem; font-weight: 700; letter-spacing: -1px; }
+        .nav-links { display: flex; gap: 30px; align-items: center; }
+        .nav-link { position: relative; font-weight: 500; font-size: 0.95rem; color: var(--text-muted); }
+        .nav-link:hover { color: var(--accent-main); }
+        
+        .nav-actions { display: flex; align-items: center; gap: 15px; }
+        .btn-cv {
+            padding: 8px 20px; border: 1px solid var(--glass-border); background: var(--glass-bg);
+            border-radius: 50px; font-size: 0.9rem; display: flex; align-items: center; gap: 8px;
+            transition: 0.3s; color: var(--text-main); font-weight: 500;
+        }
+        .btn-cv:hover { border-color: var(--accent-main); color: var(--accent-main); background: rgba(56, 189, 248, 0.1); }
+        .theme-toggle {
+            cursor: pointer; padding: 10px; border-radius: 50%;
+            background: var(--glass-bg); border: 1px solid var(--glass-border);
+            color: var(--text-main); transition: 0.3s;
+        }
+        .theme-toggle:hover { background: var(--accent-main); color: #fff; }
+
+        /* =========================================
+           4. CASE STUDY SPECIFIC STYLES
+           ========================================= */
+        .project-hero {
+            position: relative; padding: 180px 0 100px; text-align: center;
+        }
+        .project-tags {
+            display: inline-flex; gap: 10px; margin-bottom: 20px;
+        }
+        .tag {
+            font-size: 0.8rem; padding: 5px 15px; border-radius: 50px;
+            border: 1px solid var(--accent-main); color: var(--accent-main); letter-spacing: 1px;
+            text-transform: uppercase;
+        }
+        .project-title {
+            font-size: 4rem; margin-bottom: 20px;
+        }
+        .project-subtitle {
+            font-size: 1.5rem; color: var(--text-muted); max-width: 600px; margin: 0 auto;
+        }
+        
+        .project-image-showcase {
+            width: 100%; height: 500px; border-radius: var(--radius-lg); margin: 60px 0;
+            background: linear-gradient(135deg, var(--bg-secondary), var(--bg-color));
+            border: 1px solid var(--glass-border); overflow: hidden;
+            display: flex; align-items: center; justify-content: center; position: relative;
+        }
+        /* Placeholder Mockup Art */
+        .mockup-screen {
+            width: 80%; height: 80%; background: var(--glass-bg);
+            border-radius: var(--radius-md); border: 1px solid var(--glass-border);
+            box-shadow: var(--shadow-soft); display: flex; align-items: center; justify-content: center;
+        }
+        .mockup-icon { font-size: 5rem; color: var(--accent-main); opacity: 0.5; }
+
+        .content-block { padding: 60px 0; }
+        .grid-2 { display: grid; grid-template-columns: 1fr 0.5fr; gap: 60px; }
+        
+        .info-card h4 { font-size: 0.9rem; text-transform: uppercase; letter-spacing: 1px; color: var(--text-muted); margin-bottom: 10px; }
+        .info-card p { font-size: 1.1rem; color: var(--text-main); font-weight: 500; }
+        .info-card { margin-bottom: 30px; }
+
+        .gallery-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 30px; margin: 50px 0; }
+        .gallery-item {
+            height: 300px; background: var(--bg-secondary); border-radius: var(--radius-md);
+            border: 1px solid var(--glass-border); display: flex; align-items: center; justify-content: center;
+            transition: 0.3s;
+        }
+        .gallery-item:hover { transform: translateY(-5px); box-shadow: var(--shadow-soft); }
+
+        .next-project {
+            margin-top: 100px; padding: 60px; text-align: center; border-radius: var(--radius-lg);
+            background: linear-gradient(135deg, var(--bg-secondary), var(--bg-color));
+            border: 1px solid var(--glass-border);
+        }
+        .btn-primary {
+            padding: 12px 30px; border-radius: 50px; font-weight: 600; cursor: pointer;
+            border: none; transition: 0.3s; display: inline-flex; align-items: center; gap: 10px;
+            background: var(--accent-main); color: #fff;
+        }
+        [data-theme="dark"] .btn-primary { color: #000; }
+
+        footer {
+            position: relative; padding: 50px 0; text-align: center; border-top: 1px solid var(--glass-border); 
+            margin-top: 100px; overflow: hidden;
+        }
+        #matrix-canvas { position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 0; opacity: 0.1; }
+        .footer-content { position: relative; z-index: 1; }
+        #particles-js { position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: -1; }
+
+        @media (max-width: 900px) {
+            .nav-links { display: none; }
+            .grid-2 { grid-template-columns: 1fr; gap: 30px; }
+            .project-title { font-size: 2.5rem; }
+            .gallery-grid { grid-template-columns: 1fr; }
+            .nav-actions { margin-left: auto; }
+        }
+    </style>
+</head>
+<body data-theme="dark">
+
+    <div class="cursor-dot" data-cursor-dot></div>
+    <div class="scroll-progress" id="scrollProgress"></div>
+
+    <nav class="navbar glass">
+        <div class="container nav-container">
+            <a href="index.html" class="logo">EOGHAN<span style="color:var(--accent-main)">.</span></a>
+            <ul class="nav-links">
+                <li><a href="index.html#projects" class="nav-link">Work</a></li>
+                <li><a href="index.html#about" class="nav-link">Journey</a></li>
+                <li><a href="index.html#contact" class="nav-link">Contact</a></li>
+            </ul>
+            <div class="nav-actions">
+                <a href="CV_Eoghan_Russell.pdf" class="btn-cv" download><i class="fas fa-download"></i> CV</a>
+                <div class="theme-toggle" id="theme-btn"><i class="fas fa-sun"></i></div>
+            </div>
+        </div>
+    </nav>
+
+    <header class="project-hero">
+        <canvas id="particles-js"></canvas>
+        <div class="container">
+            <div class="project-tags">
+                <span class="tag">Fintech</span>
+                <span class="tag">Development</span>
+            </div>
+            <h1 class="project-title">Alpha Analytics Dashboard</h1>
+            <p class="project-subtitle">A high-performance real-time data visualization platform processing millions of transactions per second.</p>
+        </div>
+    </header>
+
+    <div class="container">
+        <div class="project-image-showcase glass">
+            <div class="mockup-screen">
+                <i class="fas fa-chart-line mockup-icon"></i>
+            </div>
+        </div>
+    </div>
+
+    <section class="container content-block">
+        <div class="grid-2">
+            <div class="main-text">
+                <h3>The Challenge</h3>
+                <p>The client needed a dashboard that could handle massive datasets without lag. The previous system took 10+ seconds to load reports, frustrating high-net-worth users. The goal was to reduce load time to under 500ms while improving the UI aesthetics.</p>
+                
+                <h3 style="margin-top:40px;">The Solution</h3>
+                <p>I architected a completely new frontend using React and D3.js. By implementing virtual scrolling and web workers, we offloaded heavy calculations from the main thread. The UI was redesigned with a dark-mode-first approach to reduce eye strain for traders working long hours.</p>
+                
+                <h3 style="margin-top:40px;">Key Features</h3>
+                <ul style="list-style:disc; padding-left:20px; color:var(--text-muted); line-height:1.8;">
+                    <li>Real-time WebSocket data feeds</li>
+                    <li>Custom D3.js interactive charts</li>
+                    <li>Role-based access control</li>
+                    <li>Biometric login integration</li>
+                </ul>
+            </div>
+
+            <div class="sidebar glass" style="padding: 30px; border-radius: var(--radius-md); height: fit-content;">
+                <div class="info-card">
+                    <h4>Client</h4>
+                    <p>Alpha Stream Finance</p>
+                </div>
+                <div class="info-card">
+                    <h4>Role</h4>
+                    <p>Lead Frontend Engineer</p>
+                </div>
+                <div class="info-card">
+                    <h4>Timeline</h4>
+                    <p>3 Months (2023)</p>
+                </div>
+                <div class="info-card">
+                    <h4>Tech Stack</h4>
+                    <div style="display:flex; flex-wrap:wrap; gap:10px; margin-top:10px;">
+                        <span class="tag" style="font-size:0.7rem;">React</span>
+                        <span class="tag" style="font-size:0.7rem;">D3.js</span>
+                        <span class="tag" style="font-size:0.7rem;">Node</span>
+                        <span class="tag" style="font-size:0.7rem;">AWS</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="container">
+        <h3>Visual Process</h3>
+        <div class="gallery-grid">
+            <div class="gallery-item glass"><i class="fas fa-pencil-ruler" style="font-size:2rem; color:var(--text-muted)"></i></div>
+            <div class="gallery-item glass"><i class="fas fa-code" style="font-size:2rem; color:var(--text-muted)"></i></div>
+            <div class="gallery-item glass"><i class="fas fa-mobile" style="font-size:2rem; color:var(--text-muted)"></i></div>
+            <div class="gallery-item glass"><i class="fas fa-check-circle" style="font-size:2rem; color:var(--text-muted)"></i></div>
+        </div>
+    </section>
+
+    <div class="container">
+        <div class="next-project">
+            <h2 style="margin-bottom:20px;">Ready to build something like this?</h2>
+            <div style="display:flex; gap:20px; justify-content:center; flex-wrap:wrap;">
+                <a href="index.html#contact" class="btn btn-primary">Start a Project</a>
+                <a href="index.html" class="btn btn-cv">Back to Home</a>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <canvas id="matrix-canvas"></canvas>
+        <div class="container footer-content">
+            <p style="color:var(--text-muted)">&copy; 2024 Eoghan Russell. Crafted with Precision.</p>
+        </div>
+    </footer>
+
+    <script>
+        // 1. CURSOR
+        const cursorDot = document.querySelector('[data-cursor-dot]');
+        window.addEventListener('mousemove', function(e) {
+            cursorDot.style.left = `${e.clientX}px`;
+            cursorDot.style.top = `${e.clientY}px`;
+        });
+        document.querySelectorAll('a, button, .gallery-item').forEach(el => {
+            el.addEventListener('mouseenter', () => document.body.classList.add('hovering'));
+            el.addEventListener('mouseleave', () => document.body.classList.remove('hovering'));
+        });
+
+        // 2. SCROLL PROGRESS
+        window.addEventListener('scroll', () => {
+            const winScroll = document.body.scrollTop || document.documentElement.scrollTop;
+            const height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+            const scrolled = (winScroll / height) * 100;
+            document.getElementById("scrollProgress").style.width = scrolled + "%";
+            
+            const nav = document.querySelector('.navbar');
+            if(window.scrollY > 50) nav.classList.add('scrolled');
+            else nav.classList.remove('scrolled');
+        });
+
+        // 3. THEME
+        const themeBtn = document.getElementById('theme-btn');
+        const body = document.body;
+        if(body.getAttribute('data-theme') === 'light') themeBtn.innerHTML = '<i class="fas fa-moon"></i>'; 
+        else themeBtn.innerHTML = '<i class="fas fa-sun"></i>';
+        
+        themeBtn.addEventListener('click', () => {
+            if(body.getAttribute('data-theme') === 'light') {
+                body.setAttribute('data-theme', 'dark');
+                themeBtn.innerHTML = '<i class="fas fa-sun"></i>';
+            } else {
+                body.setAttribute('data-theme', 'light');
+                themeBtn.innerHTML = '<i class="fas fa-moon"></i>';
+            }
+        });
+
+        // 4. PARTICLES (Hero)
+        const pCanvas = document.getElementById('particles-js');
+        const pCtx = pCanvas.getContext('2d');
+        pCanvas.width = window.innerWidth;
+        pCanvas.height = window.innerHeight;
+        let particles = [];
+        class Particle {
+            constructor() {
+                this.x = Math.random() * pCanvas.width;
+                this.y = Math.random() * pCanvas.height;
+                this.size = Math.random() * 2;
+                this.speedX = Math.random() * 0.5 - 0.25;
+                this.speedY = Math.random() * 0.5 - 0.25;
+            }
+            update() {
+                this.x += this.speedX; this.y += this.speedY;
+                if(this.x > pCanvas.width || this.x < 0) this.speedX *= -1;
+                if(this.y > pCanvas.height || this.y < 0) this.speedY *= -1;
+            }
+            draw() {
+                const isLight = document.body.getAttribute('data-theme') === 'light';
+                pCtx.fillStyle = isLight ? 'rgba(2, 132, 199, 0.2)' : 'rgba(56, 189, 248, 0.2)';
+                pCtx.beginPath(); pCtx.arc(this.x, this.y, this.size, 0, Math.PI * 2); pCtx.fill();
+            }
+        }
+        function initParticles() { particles = []; for(let j=0; j<40; j++) particles.push(new Particle()); }
+        function animateParticles() {
+            pCtx.clearRect(0,0, pCanvas.width, pCanvas.height);
+            particles.forEach(p => { p.update(); p.draw(); });
+            requestAnimationFrame(animateParticles);
+        }
+        initParticles(); animateParticles();
+
+        // 5. MATRIX (Footer)
+        const mCanvas = document.getElementById('matrix-canvas');
+        const mCtx = mCanvas.getContext('2d');
+        mCanvas.width = window.innerWidth; mCanvas.height = 300;
+        const letters = "01010101ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+        const fontSize = 14;
+        const columns = mCanvas.width / fontSize;
+        const drops = Array(Math.floor(columns)).fill(1);
+        function drawMatrix() {
+            const isLight = document.body.getAttribute('data-theme') === 'light';
+            mCtx.fillStyle = isLight ? 'rgba(248, 250, 252, 0.1)' : 'rgba(15, 17, 21, 0.1)';
+            mCtx.fillRect(0, 0, mCanvas.width, mCanvas.height);
+            mCtx.fillStyle = isLight ? '#0284c7' : '#38bdf8';
+            mCtx.font = fontSize + "px monospace";
+            for(let k=0; k<drops.length; k++) {
+                const text = letters.charAt(Math.floor(Math.random()*letters.length));
+                mCtx.fillText(text, k*fontSize, drops[k]*fontSize);
+                if(drops[k]*fontSize > mCanvas.height && Math.random() > 0.975) drops[k] = 0;
+                drops[k]++;
+            }
+        }
+        setInterval(drawMatrix, 50);
+
+        window.addEventListener('resize', () => {
+            pCanvas.width = window.innerWidth;
+            mCanvas.width = window.innerWidth;
+            initParticles();
+        });
+    </script>
+</body>
+</html>
