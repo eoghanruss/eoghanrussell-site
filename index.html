@@ -3,315 +3,294 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Eoghan Russell</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&family=Space+Grotesk:wght@300;500;700&display=swap" rel="stylesheet">
+    <title>~*~ EOGHAN'S KOOL WEBZONE ~*~</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
     <style>
         /* =========================================
-           1. CSS VARIABLES & THEME SETUP
+           1. THE UGLY THEME SETUP
            ========================================= */
         :root {
-            /* Default Dark Mode Palette */
-            --bg-color: #0f1115;
-            --bg-secondary: #161920;
-            --text-main: #f0f2f5;
-            --text-muted: #94a3b8;
+            /* TELETUBBY PALETTE */
+            --tinky-winky: #4a0080; /* Purple */
+            --dipsy: #00ff00;       /* Neon Green */
+            --laa-laa: #ffff00;     /* Bright Yellow */
+            --po: #ff0000;          /* Red */
             
-            /* The "Electric Blue" Accent */
-            --accent-main: #38bdf8; 
-            --accent-glow: rgba(56, 189, 248, 0.4);
-            
-            /* Glassmorphism */
-            --glass-bg: rgba(255, 255, 255, 0.03);
-            --glass-border: rgba(255, 255, 255, 0.08);
-            --shadow-soft: 0 10px 40px -10px rgba(0,0,0,0.5);
-            
-            /* UI Kit */
-            --radius-sm: 8px;
-            --radius-md: 16px;
-            --radius-lg: 24px;
-            --font-head: 'Space Grotesk', sans-serif;
-            --font-body: 'Outfit', sans-serif;
-            --nav-height: 80px;
-        }
-
-        /* Light Mode Overrides */
-        [data-theme="light"] {
-            --bg-color: #f8fafc;
-            --bg-secondary: #ffffff;
-            --text-main: #1e293b;
-            --text-muted: #64748b;
-            
-            --accent-main: #0284c7; 
-            --accent-glow: rgba(2, 132, 199, 0.3);
-            
-            --glass-bg: rgba(255, 255, 255, 0.6);
-            --glass-border: rgba(0, 0, 0, 0.08);
-            --shadow-soft: 0 10px 30px -10px rgba(0,0,0,0.1);
+            --bg-color: #ffff00;    /* Blinding Yellow Background */
+            --text-main: #0000ff;   /* Blue text because why not */
+            --border-style: 5px dashed #ff00ff;
         }
 
         /* =========================================
            2. GLOBAL RESET & UTILITIES
            ========================================= */
-        * { margin: 0; padding: 0; box-sizing: border-box; scroll-behavior: smooth; cursor: none; /* Hide default cursor */ }
+        * { 
+            box-sizing: border-box; 
+            cursor: help !important; /* Confusing cursor */
+        }
         
         body {
-            background-color: var(--bg-color);
-            color: var(--text-main);
-            font-family: var(--font-body);
+            background-color: var(--laa-laa);
+            color: blue;
+            font-family: "Comic Sans MS", "Comic Sans", cursive; /* THE REQUESTED FONT */
             overflow-x: hidden;
-            transition: background-color 0.4s ease, color 0.4s ease;
+            background-image: linear-gradient(to bottom, #ffff00, #00ff00); /* Ugly gradient */
         }
         
-        ::-webkit-scrollbar { width: 8px; }
-        ::-webkit-scrollbar-track { background: var(--bg-color); }
-        ::-webkit-scrollbar-thumb { background: var(--accent-main); border-radius: 4px; }
+        /* Ugly Scrollbar */
+        ::-webkit-scrollbar { width: 20px; }
+        ::-webkit-scrollbar-track { background: red; }
+        ::-webkit-scrollbar-thumb { background: blue; border: 3px solid white; }
 
-        h1, h2, h3 { font-family: var(--font-head); line-height: 1.1; }
-        a { text-decoration: none; color: inherit; transition: 0.3s; }
-        ul { list-style: none; }
-
-        /* Utility Classes */
-        .glass {
-            background: var(--glass-bg);
-            backdrop-filter: blur(12px);
-            -webkit-backdrop-filter: blur(12px);
-            border: 1px solid var(--glass-border);
-            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+        h1, h2, h3 { 
+            font-family: "Comic Sans MS", cursive; 
+            text-transform: uppercase;
+            text-shadow: 3px 3px 0px #ff00ff; /* Cheap 3D effect */
+            letter-spacing: 2px;
         }
-        .container { max-width: 1200px; margin: 0 auto; padding: 0 20px; }
-        .section-padding { padding: 100px 0; }
+
+        a { 
+            text-decoration: underline; 
+            color: red; 
+            font-weight: bold; 
+            background: white;
+        }
+        
+        a:hover { 
+            background: black; 
+            color: white; 
+            text-decoration: blink; 
+        }
+
+        ul { list-style: square; }
+
+        /* "Glass" class is now "Clunky Box" class */
+        .glass {
+            background: cyan;
+            border: 5px ridge red;
+            box-shadow: 10px 10px 0px black; /* Hard shadow */
+            border-radius: 0px; /* No round corners! */
+        }
+
+        .container { max-width: 1000px; margin: 0 auto; padding: 20px; border: 2px solid black; background: white; }
+        .section-padding { padding: 50px 0; border-bottom: 10px double blue; }
+        
         .text-gradient {
-            background: linear-gradient(135deg, var(--text-main), var(--accent-main));
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
+            background: none;
+            -webkit-text-fill-color: initial;
+            color: lime;
+            background-color: black;
+            padding: 0 5px;
         }
 
         /* =========================================
-           3. CUSTOM CURSOR & SCROLL PROGRESS
+           3. CUSTOM CURSOR (Ruined)
            ========================================= */
         .cursor-dot {
             position: fixed; top: 0; left: 0; transform: translate(-50%, -50%);
-            border-radius: 50%; z-index: 9999; pointer-events: none;
-            width: 10px; height: 10px; background-color: var(--accent-main);
-            box-shadow: 0 0 10px var(--accent-main);
-            transition: width 0.2s, height 0.2s;
+            border-radius: 0; /* Square cursor */
+            z-index: 9999; pointer-events: none;
+            width: 30px; height: 30px; 
+            background-color: red;
+            border: 2px solid blue;
+            opacity: 0.5;
         }
         
-        /* Hover state for cursor */
-        body.hovering .cursor-dot {
-            width: 20px; height: 20px; opacity: 0.8;
-        }
-        
-        /* Scroll Progress Bar */
+        /* Scroll Progress Bar - distinct and ugly */
         .scroll-progress {
-            position: fixed; top: 0; left: 0; height: 3px; background: var(--accent-main);
-            width: 0%; z-index: 1001; transition: width 0.1s;
+            position: fixed; top: 0; left: 0; height: 15px; 
+            background: repeating-linear-gradient(45deg, red, red 10px, blue 10px, blue 20px);
+            width: 0%; z-index: 1001;
+            border-bottom: 2px solid black;
         }
 
         /* =========================================
            4. NAVIGATION
            ========================================= */
         .navbar {
-            position: fixed; top: 0; left: 0; width: 100%; height: var(--nav-height);
-            z-index: 1000; transition: 0.4s; display: flex; align-items: center;
+            position: fixed; top: 0; left: 0; width: 100%; height: auto;
+            z-index: 1000; 
+            background: var(--tinky-winky);
+            border-bottom: 5px dashed yellow;
+            padding: 10px;
         }
-        .navbar.scrolled {
-            height: 70px;
-            background: var(--bg-secondary); border-bottom: 1px solid var(--glass-border); opacity: 0.95;
+        
+        .nav-container { 
+            display: flex; justify-content: space-between; align-items: center; 
+            background: pink; /* Inner nav color */
+            border: 3px inset white;
         }
-        .nav-container { display: flex; justify-content: space-between; align-items: center; width: 100%; }
-        .logo { font-size: 1.5rem; font-weight: 700; letter-spacing: -1px; }
         
-        .nav-links { display: flex; gap: 30px; align-items: center; }
-        .nav-link { position: relative; font-weight: 500; font-size: 0.95rem; color: var(--text-muted); }
-        .nav-link:hover { color: var(--accent-main); }
+        .logo { 
+            font-size: 2rem; color: yellow !important; background: blue !important; padding: 5px; 
+        }
         
-        /* Nav Actions (CV + Theme) */
-        .nav-actions { display: flex; align-items: center; gap: 15px; }
+        .nav-links { display: flex; gap: 10px; list-style: none; }
+        .nav-link { font-size: 1.2rem; color: black !important; background: transparent !important; }
+        .nav-link:hover { color: red !important; background: yellow !important;}
 
         .btn-cv {
-            padding: 8px 20px; border: 1px solid var(--glass-border); background: var(--glass-bg);
-            border-radius: 50px; font-size: 0.9rem; display: flex; align-items: center; gap: 8px;
-            transition: 0.3s; color: var(--text-main); font-weight: 500;
+            background: buttonface;
+            border: 2px outset buttonface;
+            color: black !important;
+            cursor: pointer;
+            font-family: 'Comic Sans MS';
         }
-        .btn-cv:hover { border-color: var(--accent-main); color: var(--accent-main); background: rgba(56, 189, 248, 0.1); }
+        .btn-cv:active { border-style: inset; }
 
         .theme-toggle {
-            cursor: pointer; padding: 10px; border-radius: 50%;
-            background: var(--glass-bg); border: 1px solid var(--glass-border);
-            color: var(--text-main); transition: 0.3s;
+            background: red; border: 2px solid yellow; color: white; padding: 5px;
         }
-        .theme-toggle:hover { background: var(--accent-main); color: #fff; }
 
         /* =========================================
            5. HERO SECTION
            ========================================= */
         .hero {
-            position: relative; min-height: 100vh; display: flex; align-items: center;
-            overflow: hidden; padding-top: var(--nav-height);
+            position: relative; min-height: 100vh; display: block; 
+            padding-top: 150px;
+            background: url('https://media.giphy.com/media/26tOZ42Mg6pbTUPHW/giphy.gif'); /* Just a placeholder for noise if needed, but let's stick to CSS */
+            background-size: cover;
         }
-        #particles-js { position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: -1; }
+        #particles-js { position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: -1; background: white; opacity: 0.5;}
         
         .hero-content {
-            display: flex; justify-content: space-between; align-items: center; gap: 50px; width: 100%;
+            display: block; text-align: center;
+            background: rgba(255, 255, 255, 0.8);
+            border: 5px dotted red;
         }
-        .hero-text { flex: 0 0 50%; } 
-        .hero-visual { flex: 0 0 45%; position: relative; perspective: 1000px; }
         
-        .hero-text h1 { font-size: 4.5rem; margin-bottom: 20px; min-height: 160px; }
-        .typewriter { border-right: 3px solid var(--accent-main); padding-right: 5px; animation: blink 0.7s infinite; }
+        .hero-text h1 { font-size: 3rem; color: var(--tinky-winky); background: yellow;}
+        .typewriter { border-right: 10px solid black; }
         
         .tilt-card {
-            width: 100%; height: 500px;
-            background: linear-gradient(135deg, var(--bg-secondary), var(--bg-color));
-            border-radius: var(--radius-lg); display: flex; align-items: center; justify-content: center;
-            transform-style: preserve-3d; box-shadow: var(--shadow-soft); border: 1px solid var(--glass-border);
+            width: 80%; margin: 20px auto; height: 300px;
+            background: orange;
+            border: 10px solid purple;
+            display: flex; align-items: center; justify-content: center;
+            transform-style: preserve-3d;
         }
-        .tilt-card-inner { transform: translateZ(50px); text-align: center; }
-        .tilt-icon { font-size: 5rem; color: var(--accent-main); margin-bottom: 20px; }
+        .tilt-card-inner { background: white; padding: 20px; border: 2px solid black; }
+        .tilt-icon { font-size: 4rem; color: red; }
         
         .btn {
-            padding: 12px 30px; border-radius: 50px; font-weight: 600; cursor: pointer;
-            border: none; transition: 0.3s; display: inline-flex; align-items: center; gap: 10px;
+            padding: 10px 20px; font-weight: bold; cursor: pointer;
+            border: 4px outset gray; background: lightgray; color: black;
+            font-family: "Comic Sans MS";
+            text-transform: uppercase;
+            margin: 5px;
         }
-        .btn-primary { background: var(--accent-main); color: #fff; }
-        [data-theme="dark"] .btn-primary { color: #000; }
-        .btn-primary:hover { box-shadow: 0 0 20px var(--accent-glow); transform: translateY(-2px); }
-        .btn-outline { background: transparent; border: 1px solid var(--accent-main); color: var(--accent-main); margin-left: 15px; }
+        .btn:active { border-style: inset; }
+        .btn-primary { background: lime; color: blue; }
+        .btn-outline { background: yellow; border: 4px solid red; }
 
         /* =========================================
-           6. INFINITE MARQUEE
+           6. MARQUEE (The Return of the King)
            ========================================= */
-        .marquee-section { padding: 40px 0; background: var(--bg-secondary); overflow: hidden; border-top: 1px solid var(--glass-border); border-bottom: 1px solid var(--glass-border); }
-        .marquee-content { display: flex; gap: 50px; animation: scroll 20s linear infinite; width: max-content; }
-        .marquee-item { font-size: 1.5rem; font-weight: 600; color: var(--text-muted); display: flex; align-items: center; gap: 10px; opacity: 0.7; }
-        .marquee-item i { color: var(--accent-main); }
+        .marquee-section { padding: 10px 0; background: blue; border-top: 5px dashed white; border-bottom: 5px dashed white; }
+        .marquee-content { display: flex; gap: 50px; animation: scroll 5s linear infinite; } /* Sped up */
+        .marquee-item { font-size: 2rem; color: yellow; font-weight: bold; font-family: Impact; }
         
-        @keyframes scroll { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
+        @keyframes scroll { 0% { transform: translateX(0); } 100% { transform: translateX(-20%); } }
 
         /* =========================================
            7. PROJECTS
            ========================================= */
-        .projects-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 30px; }
-        .project-card { height: 400px; perspective: 1000px; cursor: pointer; }
+        .projects-grid { display: block; } /* No grid, just a stack */
+        .project-card { 
+            height: 300px; margin-bottom: 50px; perspective: 1000px; width: 80%; margin-left: 10%;
+        }
         .project-inner {
             position: relative; width: 100%; height: 100%; text-align: center;
             transition: transform 0.8s; transform-style: preserve-3d;
+            border: 5px solid black;
         }
         .project-card:hover .project-inner { transform: rotateY(180deg); }
+        
         .project-front, .project-back {
-            position: absolute; width: 100%; height: 100%; -webkit-backface-visibility: hidden; backface-visibility: hidden;
-            border-radius: var(--radius-md); overflow: hidden;
+            position: absolute; width: 100%; height: 100%; backface-visibility: hidden;
         }
         .project-front {
-            background: var(--bg-secondary); border: 1px solid var(--glass-border);
+            background: var(--dipsy); 
             display: flex; flex-direction: column; justify-content: center; align-items: center;
         }
         .project-back {
-            background: var(--accent-main); color: #fff; transform: rotateY(180deg);
-            display: flex; flex-direction: column; justify-content: center; align-items: center; padding: 20px;
+            background: var(--po); color: yellow; transform: rotateY(180deg);
+            display: flex; flex-direction: column; justify-content: center; align-items: center; 
+            font-size: 1.5rem;
         }
-        [data-theme="dark"] .project-back { color: #000; }
-        .project-icon { font-size: 3rem; margin-bottom: 20px; color: var(--accent-main); }
-        .project-front .project-icon { background: var(--glass-bg); padding: 20px; border-radius: 50%; }
+        .project-icon { font-size: 3rem; color: blue; background: white; padding: 10px; border: 3px solid black; }
 
         /* =========================================
            8. TIMELINE
            ========================================= */
-        .timeline-wrapper { position: relative; max-width: 800px; margin: 0 auto; }
+        .timeline-wrapper { position: relative; max-width: 800px; margin: 0 auto; background: pink; padding: 20px;}
         .timeline-line {
-            position: absolute; left: 50%; top: 0; bottom: 0; width: 2px;
-            background: var(--glass-border); transform: translateX(-50%);
+            position: absolute; left: 50%; top: 0; bottom: 0; width: 10px;
+            background: black; border-left: 2px dashed white;
         }
         .timeline-item {
-            position: relative; margin-bottom: 50px; width: 50%; padding: 0 40px;
-            opacity: 0; transform: translateY(30px); transition: 0.6s;
+            position: relative; margin-bottom: 50px; width: 100%; padding: 10px;
+            background: cyan; border: 3px outset blue; text-align: center !important; left: 0 !important;
+            opacity: 1 !important; transform: none !important; /* Remove fancy fade in */
         }
-        .timeline-item.show { opacity: 1; transform: translateY(0); }
-        .timeline-item:nth-child(odd) { left: 0; text-align: right; }
-        .timeline-item:nth-child(even) { left: 50%; }
         .timeline-dot {
-            position: absolute; top: 0; width: 16px; height: 16px; background: var(--accent-main);
-            border-radius: 50%; box-shadow: 0 0 10px var(--accent-main);
+            display: none; /* Hide the elegant dots */
         }
-        .timeline-item:nth-child(odd) .timeline-dot { right: -8px; }
-        .timeline-item:nth-child(even) .timeline-dot { left: -8px; }
 
         /* =========================================
            9. WIDGETS (Chat)
            ========================================= */
-        /* Chat Trigger */
         .chat-trigger {
-            position: fixed; bottom: 30px; right: 30px; width: 60px; height: 60px;
-            background: var(--accent-main); border-radius: 50%; display: flex;
-            align-items: center; justify-content: center; font-size: 1.5rem; color: #fff;
-            cursor: pointer; box-shadow: 0 10px 20px rgba(0,0,0,0.3); z-index: 1500; transition: 0.3s;
+            position: fixed; bottom: 30px; right: 30px; width: 80px; height: 80px;
+            background: yellow; border: 5px outset red; display: flex;
+            align-items: center; justify-content: center; font-size: 2rem; color: blue;
+            z-index: 1500;
         }
-        [data-theme="dark"] .chat-trigger { color: #000; }
-        .chat-trigger:hover { transform: scale(1.1) rotate(10deg); }
         
-        /* Chat Window */
         .chat-window {
-            position: fixed; bottom: 100px; right: 30px; width: 300px; height: 400px;
-            background: var(--bg-secondary); border: 1px solid var(--glass-border);
-            border-radius: var(--radius-md); z-index: 1500; display: none; flex-direction: column;
-            box-shadow: var(--shadow-soft); overflow: hidden;
+            position: fixed; bottom: 120px; right: 30px; width: 300px; height: 400px;
+            background: lightgray; border: 4px outset white;
+            z-index: 1500; display: none; flex-direction: column;
         }
-        .chat-header { background: var(--glass-bg); padding: 15px; border-bottom: 1px solid var(--glass-border); }
-        .chat-body { flex: 1; padding: 15px; overflow-y: auto; font-size: 0.9rem; }
-        .chat-msg { background: var(--glass-bg); padding: 8px 12px; border-radius: 10px; margin-bottom: 10px; display: inline-block; }
-        .chat-msg.bot { border-top-left-radius: 0; border: 1px solid var(--glass-border); }
-        .chat-input-area { padding: 10px; border-top: 1px solid var(--glass-border); display: flex; }
-        .chat-input { flex: 1; background: transparent; border: none; color: var(--text-main); outline: none; }
+        .chat-header { 
+            background: navy; color: white; padding: 5px; font-weight: bold;
+            display: flex; justify-content: space-between;
+        }
+        .chat-body { flex: 1; padding: 10px; background: white; border: 2px inset gray; overflow-y: scroll;}
+        .chat-msg { background: lime; padding: 5px; margin-bottom: 5px; border: 1px solid black; font-family: monospace;}
+        .chat-msg.bot { background: yellow; color: red; }
+        .chat-input-area { padding: 10px; background: lightgray; }
+        .chat-input { width: 70%; border: 2px inset white; }
 
         /* =========================================
-           10. CONTACT & FOOTER (MATRIX)
+           10. CONTACT & FOOTER
            ========================================= */
-        .contact-form { max-width: 600px; margin: 0 auto; }
-        .input-group { position: relative; margin-bottom: 30px; }
         .input-field {
-            width: 100%; padding: 15px; background: var(--glass-bg); border: 1px solid var(--glass-border);
-            border-radius: var(--radius-sm); color: var(--text-main); font-family: var(--font-body);
+            width: 100%; padding: 10px; margin-bottom: 10px;
+            background: yellow; border: 3px solid red; color: blue;
+            font-family: "Comic Sans MS"; font-size: 1.2rem;
         }
-        .input-field:focus { border-color: var(--accent-main); outline: none; }
         
         footer {
-            position: relative; padding: 50px 0; text-align: center; border-top: 1px solid var(--glass-border); 
-            margin-top: 100px; overflow: hidden;
+            position: relative; padding: 20px; text-align: center; 
+            background: black; border-top: 10px solid lime;
+            margin-top: 50px;
         }
         #matrix-canvas {
-            position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 0; opacity: 0.1;
+            position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 0; opacity: 0.5;
         }
-        .footer-content { position: relative; z-index: 1; }
-
-        /* Keyframes */
-        @keyframes blink { 50% { border-color: transparent; } }
-
-        /* Mobile Responsive */
+        .footer-content { 
+            position: relative; z-index: 1; background: white; border: 5px dashed black; display: inline-block; padding: 20px;
+        }
+        
+        /* Mobile overrides to ensure it's still readable-ish */
         @media (max-width: 900px) {
-            * { cursor: default; } /* Reset cursor on touch */
-            .cursor-dot { display: none; }
-            .hero-content { flex-direction: column; text-align: center; }
-            .hero-text { flex: auto; order: 1; }
-            .hero-visual { display: none; }
-            .hero-text h1 { font-size: 3rem; min-height: auto; }
-            
-            /* Navbar Mobile */
-            .nav-links { display: none; } /* Hide the text links */
-            /* nav-actions (CV and Toggle) remain visible */
-            .nav-actions { margin-left: auto; } 
-            
-            .timeline-item { width: 100%; left: 0 !important; text-align: left !important; padding-left: 30px; }
-            .timeline-line { left: 10px; }
-            .timeline-dot { left: 2px !important; }
+            .hero-text h1 { font-size: 2rem; }
         }
     </style>
 </head>
-<body id="top" data-theme="dark">
+<body id="top" data-theme="ugly">
 
     <div class="cursor-dot" data-cursor-dot></div>
     
@@ -319,19 +298,19 @@
 
     <nav class="navbar glass">
         <div class="container nav-container">
-            <a href="#" class="logo">EOGHAN<span style="color:var(--accent-main)">.</span></a>
+            <a href="#" class="logo">EOGHAN'S<br>HOMEPAGE</a>
             
             <ul class="nav-links">
-                <li><a href="#projects" class="nav-link">Work</a></li>
-                <li><a href="#about" class="nav-link">Journey</a></li>
-                <li><a href="#contact" class="nav-link">Contact</a></li>
+                <li><a href="#projects" class="nav-link">[ MY STUFF ]</a></li>
+                <li><a href="#about" class="nav-link">[ ME ME ME ]</a></li>
+                <li><a href="#contact" class="nav-link">[ EMAIL ME ]</a></li>
             </ul>
 
             <div class="nav-actions">
-                <a href="assets/CV_Eoghan_Russell.pdf" class="btn-cv" download><i class="fas fa-download"></i> CV</a>
+                <a href="#" class="btn-cv"><i class="fas fa-save"></i> DOWNLOAD RESUME.EXE</a>
                 
                 <div class="theme-toggle" id="theme-btn">
-                    <i class="fas fa-sun"></i>
+                    <i class="fas fa-lightbulb"></i>
                 </div>
             </div>
         </div>
@@ -341,94 +320,85 @@
         <canvas id="particles-js"></canvas>
         <div class="container hero-content">
             <div class="hero-text">
-                <p>HELLO, </p>
+                <p style="font-size: 20px; background: red; color: yellow; display: inline;">WELCOME TO MY WEBSITE!!!</p>
                 <h1>I Am <span class="text-gradient" id="typewriter"></span><span class="typewriter"></span></h1>
-                <p>A software development graduate with hands-on experience across tech, communications, and operations. Skilled in social media, HR support, 
-                    sales administration, and internal communications, with a focus on creating smooth systems, clear messaging, and real results. Combines technical 
-                    skill and practical experience to help teams work more efficiently and projects run seamlessly.</p><br>
+                <p style="font-size: 1.5rem; background: lime;"><b>Crafting internet pages since 2005.</b></p><br>
                 <div class="cta-group">
-                    <a href="#projects" class="btn btn-primary">View Work <i class="fas fa-arrow-right"></i></a>
-                    <a href="#contact" class="btn btn-outline">Contact Me</a>
+                    <a href="#projects" class="btn btn-primary">CLICK HERE PLS</a>
+                    <a href="#contact" class="btn btn-outline">NO CLICK HERE</a>
                 </div>
             </div>
-<div class="hero-visual">
-    <div class="tilt-card glass" id="tiltCard">
-        <div class="tilt-card-inner">
-            <img src="assets/profile.jpg" alt="Eoghan Russell" style="width:100%; height:100%; object-fit:cover; border-radius: var(--radius-lg);">
-        </div>
-    </div>
-</div>
+            <div class="hero-visual">
+                <div class="tilt-card" id="tiltCard">
+                    <div class="tilt-card-inner">
+                        <i class="fas fa-mouse-pointer tilt-icon"></i>
+                        <h3>MOVE MOUSE!!!</h3>
+                        <p>IT WIGGLES!</p>
+                    </div>
+                </div>
+            </div>
         </div>
     </section>
 
     <div class="marquee-section">
         <div class="marquee-content">
-            <div class="marquee-item"><i class="fab fa-react"></i> React</div>
-            <div class="marquee-item"><i class="fab fa-js"></i> JavaScript</div>
-            <div class="marquee-item"><i class="fab fa-html5"></i> HTML5</div>
-            <div class="marquee-item"><i class="fab fa-css3"></i> CSS3</div>
-            <div class="marquee-item"><i class="fab fa-node"></i> Node.js</div>
-            <div class="marquee-item"><i class="fab fa-figma"></i> Figma</div>
-            <div class="marquee-item"><i class="fab fa-aws"></i> AWS</div>
-            <div class="marquee-item"><i class="fab fa-python"></i> Python</div>
-            <div class="marquee-item"><i class="fab fa-react"></i> React</div>
-            <div class="marquee-item"><i class="fab fa-js"></i> JavaScript</div>
-            <div class="marquee-item"><i class="fab fa-html5"></i> HTML5</div>
-            <div class="marquee-item"><i class="fab fa-css3"></i> CSS3</div>
-            <div class="marquee-item"><i class="fab fa-node"></i> Node.js</div>
-            <div class="marquee-item"><i class="fab fa-figma"></i> Figma</div>
-            <div class="marquee-item"><i class="fab fa-aws"></i> AWS</div>
-            <div class="marquee-item"><i class="fab fa-python"></i> Python</div>
+            <div class="marquee-item">*** HTML MASTER ***</div>
+            <div class="marquee-item">*** JAVA SCRIPT ***</div>
+            <div class="marquee-item">*** MS FRONTPAGE ***</div>
+            <div class="marquee-item">*** CSS WIZARD ***</div>
+            <div class="marquee-item">*** DREAMWEAVER ***</div>
+            <div class="marquee-item">*** FLASH ANIMATION ***</div>
+            <div class="marquee-item">*** HTML MASTER ***</div>
+            <div class="marquee-item">*** JAVA SCRIPT ***</div>
         </div>
     </div>
 
-    <section id="projects" class="section-padding">
+    <section id="projects" class="section-padding" style="background: url('https://img.freepik.com/free-vector/hand-drawn-checkerboard-pattern_23-2151000624.jpg');">
         <div class="container">
             <div class="section-header">
-                <h2>Previous Projects</h2>
-                <p style="color:var(--text-muted)">Hover to reveal details</p><br><br>
+                <h2 style="background: white; display: inline-block;">MY COOL PROJECTS</h2>
+                <p style="background: white;">(Hover to flip the card!!!!)</p>
             </div>
             <div class="projects-grid">
                 <div class="project-card">
                     <div class="project-inner">
-                        <div class="project-front glass">
-                            <i class="fas fa-laptop-code project-icon"></i>
-                            <h3>CampusNav</h3>
-                            <p style="color:var(--text-muted)"></p>
+                        <div class="project-front">
+                            <i class="fas fa-chart-line project-icon"></i>
+                            <h3>FINANCE THING</h3>
+                            <p>Very boring numbers</p>
                         </div>
                         <div class="project-back">
-                            <h3>CampusNav</h3>
-                            <p>CampusNav is a student-friendly navigation app designed to help first-year students easily find their way around 
-                                campus. With a sleek compass interface and clear directions, it makes exploring college simple</p>
-                            <button class="btn" style="background:#fff; color:#000; margin-top:20px;">View Case Study</button>
+                            <h3>$$$ MONEY $$$</h3>
+                            <p>It counts numbers really fast.</p>
+                            <button class="btn">GO TO PAGE</button>
                         </div>
                     </div>
                 </div>
                 <div class="project-card">
                     <div class="project-inner">
-                        <div class="project-front glass">
-                            <i class="fas fa-mobile-alt project-icon"></i>
-                            <h3>Celestial</h3>
-                            <p style="color:var(--text-muted)"></p>
+                        <div class="project-front">
+                            <i class="fas fa-phone project-icon"></i>
+                            <h3>PHONE APP</h3>
+                            <p>For phones only</p>
                         </div>
                         <div class="project-back">
-                            <h3>Celestial</h3>
-                            <p>My Wedding Planner app helps couples organize every detail of their big day, from guest lists to seating charts, making wedding planning simple and stress-free</p>
-                            <button class="btn" style="background:#fff; color:#000; margin-top:20px;">View Case Study</button>
+                            <h3>IT BEEPS</h3>
+                            <p>Award winning beep noises.</p>
+                            <button class="btn">DOWNLOAD ZIP</button>
                         </div>
                     </div>
                 </div>
                 <div class="project-card">
                     <div class="project-inner">
-                        <div class="project-front glass">
-                            <i class="fas fa-vr-cardboard project-icon"></i>
-                            <h3>FitTrack</h3>
-                            <p style="color:var(--text-muted)"></p>
+                        <div class="project-front">
+                            <i class="fas fa-glasses project-icon"></i>
+                            <h3>VR HEADSET</h3>
+                            <p>3D WORLD</p>
                         </div>
                         <div class="project-back">
-                            <h3>FitTrack</h3>
-                            <p>FitTrack is a workout app that helps you plan, track, and level up your fitness routine, keeping you motivated and on track toward your goals</p>
-                            <button class="btn" style="background:#fff; color:#000; margin-top:20px;">View Case Study</button>
+                            <h3>CYBERSPACE</h3>
+                            <p>Like the Matrix but real.</p>
+                            <button class="btn">ENTER THE VOID</button>
                         </div>
                     </div>
                 </div>
@@ -436,64 +406,57 @@
         </div>
     </section>
 
-    <section id="about" class="section-padding" style="background: var(--bg-secondary);">
+    <section id="about" class="section-padding" style="background: var(--tinky-winky);">
         <div class="container">
             <div class="section-header">
-                <h2>My Journey</h2><br><br>
+                <h2 style="color: white;">MY LIFE STORY</h2>
             </div>
             <div class="timeline-wrapper">
                 <div class="timeline-line"></div>
                 <div class="timeline-item">
-                    <div class="timeline-dot"></div>
-                    <h3>Sales Administator</h3>
-                    <span style="color:var(--accent-main)">2025 - Present</span>
-                    <p style="margin-top:10px; color:var(--text-muted)">Handled calls, followed up with customers, and chased leads at NuSolas Energy to help keep the sales process moving and bring in new business</p>
+                    <h3>BIG BOSS CODER</h3>
+                    <span style="background: yellow;">2023 - NOW</span>
+                    <p>I tell people what to do.</p>
                 </div>
                 <div class="timeline-item">
-                    <div class="timeline-dot"></div>
-                    <h3>Internal Communications Director</h3>
-                    <span style="color:var(--accent-main)">2022 - 2025</span>
-                    <p style="margin-top:10px; color:var(--text-muted)">Spent four summers in the US on a J-1 working at Camp Manitou teaching at kids basic coding, and most recently served as Internal Communications Director handling schedules, daily newsletters, and trip planning</p>
+                    <h3>COMPUTER GUY</h3>
+                    <span style="background: yellow;">2021 - 2023</span>
+                    <p>I made buttons work.</p>
                 </div>
                 <div class="timeline-item">
-                    <div class="timeline-dot"></div>
-                    <h3>Marketing & HR Associate</h3>
-                    <span style="color:var(--accent-main)">2024 - 2024</span>
-                    <p style="margin-top:10px; color:var(--text-muted)">Supported brand promotion, improved HR filing systems, and used social media at Ei Electronics to attract candidates and showcase company culture</p>
+                    <h3>ARTIST</h3>
+                    <span style="background: yellow;">2019 - 2021</span>
+                    <p>I drew rectangles in Photoshop.</p>
                 </div>
                 <div class="timeline-item">
-                    <div class="timeline-dot"></div>
-                    <h3>Social Media and Brand Promotion Specialist</h3>
-                    <span style="color:var(--accent-main)">2023 - 2025</span>
-                    <p style="margin-top:10px; color:var(--text-muted)">Created engaging TikTok and Instagram content, stayed updated on trends, and interacted with followers to grow a loyal community with Camp Counselors USA</p>
-                </div>
-                <div class="timeline-item">
-                    <div class="timeline-dot"></div>
-                    <h3>Immersive Digital Media – BSc (Hons)</h3>
-                    <span style="color:var(--accent-main)">2021 - 2025</span>
-                    <p style="margin-top:10px; color:var(--text-muted)">Specialized in Digital Media such as UI/UX Design and Software Development at the Technological University of the Shannon</p>
+                    <h3>SCHOOL</h3>
+                    <span style="background: yellow;">2014 - 2018</span>
+                    <p>I learned to type fast.</p>
                 </div>
             </div>
         </div>
     </section>
 
-    <section id="contact" class="section-padding">
+    <section id="contact" class="section-padding" style="background: orange;">
         <div class="container">
             <div class="section-header">
-                <h2>Contact Me</h2><br><br>
+                <h2>SIGN MY GUESTBOOK</h2>
             </div>
             
-            <form action="https://formspree.io/f/mgvgndjn" method="POST" class="contact-form glass" style="padding:40px; border-radius:var(--radius-md);">
+            <form class="contact-form glass" style="padding:20px; border: 10px solid blue;">
                 <div class="input-group">
-                    <input type="text" name="name" class="input-field" placeholder="Name" required>
+                    <label>NAME:</label>
+                    <input type="text" name="name" class="input-field" placeholder="ENTER NAME HERE" required>
                 </div>
                 <div class="input-group">
-                    <input type="email" name="email" class="input-field" placeholder="Email" required>
+                     <label>E-MAIL:</label>
+                    <input type="email" name="email" class="input-field" placeholder="ENTER EMAIL @@@" required>
                 </div>
                 <div class="input-group">
-                    <textarea name="message" class="input-field" rows="5" placeholder="Message" required></textarea>
+                     <label>MSG:</label>
+                    <textarea name="message" class="input-field" rows="5" placeholder="SAY HELLO!!!" required></textarea>
                 </div>
-                <button type="submit" class="btn btn-primary">Send Message</button>
+                <button type="submit" class="btn btn-primary" style="width: 100%; font-size: 2rem;">SEND IT >></button>
             </form>
 
         </div>
@@ -502,87 +465,61 @@
     <footer>
         <canvas id="matrix-canvas"></canvas>
         <div class="container footer-content">
-            <p style="color:var(--text-muted)">&copy; 2026 Eoghan Russell</p>
-            <div style="margin-top:20px; font-size:1.2rem;">
-                <a href="https://www.linkedin.com/in/eoghan-russell/" target="_blank">
-    <i class="fab fa-linkedin" style="margin:0 10px;"></i>
-</a>
-<a href="https://www.instagram.com/eoghanruss" target="_blank">
-    <i class="fab fa-instagram" style="margin:0 10px;"></i>
-</a>
+            <p style="color: blue;">&copy; 2005-2024 Eoghan Russell. DO NOT STEAL.</p>
+            <marquee style="background: yellow; color: red;">THANKS FOR VISITING * THANKS FOR VISITING * THANKS FOR VISITING</marquee>
+            <div style="margin-top:20px; font-size:2rem;">
+                <i class="fab fa-github" style="color: purple;"></i>
+                <i class="fab fa-linkedin" style="color: green;"></i>
+                <i class="fab fa-twitter" style="color: blue;"></i>
             </div>
         </div>
     </footer>
 
     <div class="chat-trigger" id="chatTrigger">
-        <i class="fas fa-comment-dots"></i>
+        <i class="fas fa-comment"></i>
     </div>
     <div class="chat-window" id="chatWindow">
         <div class="chat-header">
-            <h4>Mini-Eoghan AI</h4>
+            <span>EoghanBot v1.0</span>
+            <span style="cursor:pointer" onclick="document.getElementById('chatWindow').style.display='none'">[X]</span>
         </div>
         <div class="chat-body" id="chatBody">
-            <div class="chat-msg bot">Hi! I'm Eoghan's digital assistant. How can I help?</div>
+            <div class="chat-msg bot">HELLO. I AM ROBOT. TYPE BELOW.</div>
         </div>
         <div class="chat-input-area">
             <input type="text" class="chat-input" placeholder="Type here..." id="chatInput">
-            <i class="fas fa-paper-plane" style="color:var(--accent-main); cursor:pointer;" id="sendBtn"></i>
+            <button id="sendBtn" style="border: 2px outset;">SEND</button>
         </div>
     </div>
 
     <script>
-        // --- 1. CUSTOM CURSOR & HOVER EFFECTS ---
+        // --- 1. UGLY CURSOR ---
         const cursorDot = document.querySelector('[data-cursor-dot]');
-        
         window.addEventListener('mousemove', function(e) {
-            const posX = e.clientX;
-            const posY = e.clientY;
-            
-            // Dot follows instantly
-            cursorDot.style.left = `${posX}px`;
-            cursorDot.style.top = `${posY}px`;
+            // It lags now on purpose because I removed the smooth transition
+            cursorDot.style.left = `${e.clientX}px`;
+            cursorDot.style.top = `${e.clientY}px`;
         });
 
-        // Add magnetic/hover effect to all clickable elements
-        const clickables = document.querySelectorAll('a, button, .chat-trigger, .project-card, .theme-toggle');
-        clickables.forEach(el => {
-            el.addEventListener('mouseenter', () => document.body.classList.add('hovering'));
-            el.addEventListener('mouseleave', () => document.body.classList.remove('hovering'));
-        });
-
-        // --- 2. SCROLL PROGRESS BAR ---
+        // --- 2. SCROLL PROGRESS (The Rainbow Bar) ---
         window.addEventListener('scroll', () => {
             const winScroll = document.body.scrollTop || document.documentElement.scrollTop;
             const height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
             const scrolled = (winScroll / height) * 100;
             document.getElementById("scrollProgress").style.width = scrolled + "%";
-            
-            // Navbar Glass Effect
-            const nav = document.querySelector('.navbar');
-            if(window.scrollY > 50) nav.classList.add('scrolled');
-            else nav.classList.remove('scrolled');
         });
 
-        // --- 3. THEME SWITCHER ---
+        // --- 3. THEME SWITCHER (Does basically nothing but flip colors weirdly) ---
         const themeBtn = document.getElementById('theme-btn');
         const body = document.body;
-        // Initialize Icon
-        if(body.getAttribute('data-theme') === 'light') { themeBtn.innerHTML = '<i class="fas fa-moon"></i>'; } 
-        else { themeBtn.innerHTML = '<i class="fas fa-sun"></i>'; }
-
         themeBtn.addEventListener('click', () => {
-            const currentTheme = body.getAttribute('data-theme');
-            if(currentTheme === 'light') {
-                body.setAttribute('data-theme', 'dark');
-                themeBtn.innerHTML = '<i class="fas fa-sun"></i>';
-            } else {
-                body.setAttribute('data-theme', 'light');
-                themeBtn.innerHTML = '<i class="fas fa-moon"></i>';
-            }
+           // Just alert the user
+           alert("SORRY, DARK MODE NOT INSTALLED ON WINDOWS 98.");
+           document.body.style.backgroundColor = document.body.style.backgroundColor === 'pink' ? 'yellow' : 'pink';
         });
 
-        // --- 4. TYPEWRITER ---
-        const words = ["Eoghan Russell", "Web Applications", "Interactive UIs"];
+        // --- 4. TYPEWRITER (Capitalized) ---
+        const words = ["WEB MASTER", "HTML CODER", "INTERNET GUY"];
         let i = 0;
         function typeWriter() {
             const heading = document.getElementById('typewriter');
@@ -592,8 +529,8 @@
                 if (c < word.length) {
                     heading.innerHTML += word.charAt(c);
                     c++;
-                    setTimeout(type, 100);
-                } else { setTimeout(erase, 2000); }
+                    setTimeout(type, 150); // Slower typing
+                } else { setTimeout(erase, 1000); }
             };
             const erase = () => {
                 if (c > 0) {
@@ -609,24 +546,15 @@
         }
         typeWriter();
 
-        // --- 5. 3D TILT EFFECT ---
+        // --- 5. TILT EFFECT (Still works but looks boxy) ---
         const card = document.getElementById('tiltCard');
         document.addEventListener('mousemove', (e) => {
-            if(window.innerWidth < 900) return;
-            const x = (window.innerWidth / 2 - e.pageX) / 25;
-            const y = (window.innerHeight / 2 - e.pageY) / 25;
+            const x = (window.innerWidth / 2 - e.pageX) / 10; // Made it more sensitive/jittery
+            const y = (window.innerHeight / 2 - e.pageY) / 10;
             card.style.transform = `rotateY(${x}deg) rotateX(${y}deg)`;
         });
 
-        // --- 6. SCROLL OBSERVER ---
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if(entry.isIntersecting) entry.target.classList.add('show');
-            });
-        });
-        document.querySelectorAll('.timeline-item').forEach(el => observer.observe(el));
-
-        // --- 7. PARTICLES (HEADER) ---
+        // --- 6. PARTICLES (Big Ugly Squares) ---
         const pCanvas = document.getElementById('particles-js');
         const pCtx = pCanvas.getContext('2d');
         pCanvas.width = window.innerWidth;
@@ -637,9 +565,11 @@
             constructor() {
                 this.x = Math.random() * pCanvas.width;
                 this.y = Math.random() * pCanvas.height;
-                this.size = Math.random() * 2;
-                this.speedX = Math.random() * 1 - 0.5;
-                this.speedY = Math.random() * 1 - 0.5;
+                this.size = Math.random() * 20 + 5; // HUGE PARTICLES
+                this.speedX = Math.random() * 4 - 2; // FAST
+                this.speedY = Math.random() * 4 - 2;
+                // Random Teletubby colors
+                this.color = ['red', 'lime', 'yellow', 'purple', 'cyan'][Math.floor(Math.random()*5)];
             }
             update() {
                 this.x += this.speedX;
@@ -648,16 +578,16 @@
                 if(this.y > pCanvas.height || this.y < 0) this.speedY *= -1;
             }
             draw() {
-                const isLight = document.body.getAttribute('data-theme') === 'light';
-                pCtx.fillStyle = isLight ? 'rgba(2, 132, 199, 0.2)' : 'rgba(56, 189, 248, 0.2)';
+                pCtx.fillStyle = this.color;
                 pCtx.beginPath();
-                pCtx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+                // Draw squares instead of circles
+                pCtx.rect(this.x, this.y, this.size, this.size); 
                 pCtx.fill();
             }
         }
         function initParticles() {
             particles = [];
-            for(let j=0; j<50; j++) particles.push(new Particle());
+            for(let j=0; j<30; j++) particles.push(new Particle());
         }
         function animateParticles() {
             pCtx.clearRect(0,0, pCanvas.width, pCanvas.height);
@@ -667,37 +597,33 @@
         initParticles();
         animateParticles();
 
-        // --- 8. MATRIX RAIN (FOOTER) ---
+        // --- 7. MATRIX RAIN (Bigger font, uglier color) ---
         const mCanvas = document.getElementById('matrix-canvas');
         const mCtx = mCanvas.getContext('2d');
         mCanvas.width = window.innerWidth;
-        mCanvas.height = 300; // Footer height approx
+        mCanvas.height = 300; 
         
         const letters = "01010101ABCDEFGHIJKLMNOPQRSTUVWXYZ";
-        const fontSize = 14;
+        const fontSize = 20; // Big font
         const columns = mCanvas.width / fontSize;
         const drops = Array(Math.floor(columns)).fill(1);
 
         function drawMatrix() {
-            // Semi-transparent black to create trail effect
-            const isLight = document.body.getAttribute('data-theme') === 'light';
-            mCtx.fillStyle = isLight ? 'rgba(248, 250, 252, 0.1)' : 'rgba(15, 17, 21, 0.1)';
+            mCtx.fillStyle = 'rgba(255, 255, 0, 0.2)'; // Yellow trail
             mCtx.fillRect(0, 0, mCanvas.width, mCanvas.height);
             
-            mCtx.fillStyle = isLight ? '#0284c7' : '#0F0'; // Green usually, but let's stick to theme (Blue)
-            if(!isLight) mCtx.fillStyle = '#38bdf8'; // Electric blue for dark mode
-
-            mCtx.font = fontSize + "px monospace";
+            mCtx.fillStyle = '#ff0000'; // Red text (hard to read against yellow)
+            mCtx.font = fontSize + "px 'Courier New'";
             for(let k=0; k<drops.length; k++) {
                 const text = letters.charAt(Math.floor(Math.random()*letters.length));
                 mCtx.fillText(text, k*fontSize, drops[k]*fontSize);
-                if(drops[k]*fontSize > mCanvas.height && Math.random() > 0.975) drops[k] = 0;
+                if(drops[k]*fontSize > mCanvas.height && Math.random() > 0.95) drops[k] = 0;
                 drops[k]++;
             }
         }
         setInterval(drawMatrix, 50);
 
-        // --- 9. CHAT WIDGET ---
+        // --- 8. CHAT WIDGET ---
         const chatTrigger = document.getElementById('chatTrigger');
         const chatWindow = document.getElementById('chatWindow');
         chatTrigger.addEventListener('click', () => {
@@ -707,29 +633,13 @@
             const input = document.getElementById('chatInput');
             if(input.value.trim() === '') return;
             const chatBody = document.getElementById('chatBody');
-            chatBody.innerHTML += `<div class="chat-msg" style="align-self:flex-end; background:var(--accent-main); color:#fff;">${input.value}</div>`;
+            chatBody.innerHTML += `<div class="chat-msg" style="align-self:flex-end; background:cyan; border: 2px solid blue;">YOU: ${input.value}</div>`;
             input.value = '';
             setTimeout(() => {
-                chatBody.innerHTML += `<div class="chat-msg bot">Thanks for reaching out! Eoghan will see this message soon.</div>`;
+                chatBody.innerHTML += `<div class="chat-msg bot">I AM OUT TO LUNCH.</div>`;
                 chatBody.scrollTop = chatBody.scrollHeight;
             }, 1000);
         });
-        
-        // Handle Resize
-        window.addEventListener('resize', () => {
-            pCanvas.width = window.innerWidth;
-            pCanvas.height = window.innerHeight;
-            mCanvas.width = window.innerWidth;
-            initParticles();
-        });
     </script>
 </body>
-
 </html>
-
-
-
-
-
-
-
