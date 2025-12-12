@@ -59,14 +59,13 @@
             transition: background-color 0.4s ease, color 0.4s ease;
         }
 
-        /* ANIMATION WRAPPER (Applied to <main>, not body) */
+        /* ANIMATION WRAPPER */
         main {
             opacity: 0;
             transform: scale(0.98) translateY(20px);
             transition: opacity 0.8s ease-out, transform 0.8s cubic-bezier(0.22, 1, 0.36, 1);
         }
         
-        /* The class JS adds when page loads */
         main.loaded {
             opacity: 1;
             transform: scale(1) translateY(0);
@@ -81,7 +80,6 @@
         a { text-decoration: none; color: inherit; transition: 0.3s; }
         ul { list-style: none; padding: 0; margin: 0; }
 
-        /* FIXED: Changed from 1000px to 1200px to match Home Page */
         .container { max-width: 1200px; margin: 0 auto; padding: 0 20px; }
         
         .glass {
@@ -136,7 +134,7 @@
         .theme-toggle:hover { background: var(--accent-main); color: #fff; }
 
         /* =========================================
-           4. CASE STUDY SPECIFIC STYLES
+           4. CASE STUDY STYLES
            ========================================= */
         .project-hero {
             position: relative; padding: 180px 0 100px; text-align: center;
@@ -162,12 +160,11 @@
             border: 1px solid var(--glass-border); overflow: hidden;
             display: flex; align-items: center; justify-content: center; position: relative;
         }
-        .mockup-screen {
-            width: 80%; height: 80%; background: var(--glass-bg);
-            border-radius: var(--radius-md); border: 1px solid var(--glass-border);
-            box-shadow: var(--shadow-soft); display: flex; align-items: center; justify-content: center;
+        /* Video Container Styling */
+        .project-video {
+            width: 100%; height: 100%; object-fit: cover; 
+            border-radius: var(--radius-lg);
         }
-        .mockup-icon { font-size: 5rem; color: var(--accent-main); opacity: 0.5; }
 
         .content-block { padding: 60px 0; }
         .grid-2 { display: grid; grid-template-columns: 1fr 0.5fr; gap: 60px; }
@@ -179,10 +176,17 @@
         .gallery-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 30px; margin: 50px 0; }
         .gallery-item {
             height: 300px; background: var(--bg-secondary); border-radius: var(--radius-md);
-            border: 1px solid var(--glass-border); display: flex; align-items: center; justify-content: center;
+            border: 1px solid var(--glass-border); 
+            display: flex; align-items: center; justify-content: center;
+            overflow: hidden; /* Ensures image stays inside rounded corners */
             transition: 0.3s;
         }
+        .gallery-item img {
+            width: 100%; height: 100%; object-fit: cover;
+            transition: transform 0.5s ease;
+        }
         .gallery-item:hover { transform: translateY(-5px); box-shadow: var(--shadow-soft); }
+        .gallery-item:hover img { transform: scale(1.05); }
 
         .btn-primary {
             padding: 12px 30px; border-radius: 50px; font-weight: 600; cursor: pointer;
@@ -200,10 +204,10 @@
         #particles-js { position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: -1; }
 
         @media (max-width: 900px) {
-            * { cursor: default; }
+            * { cursor: default; } 
             .cursor-dot { display: none; }
             .nav-links { display: none; }
-            .nav-actions { margin-left: auto; }
+            .nav-actions { margin-left: auto; } 
             
             .container { padding: 0 30px !important; }
             .project-hero { padding: 120px 0 60px; }
@@ -225,11 +229,11 @@
             <a href="/" class="logo">EOGHAN<span style="color:var(--accent-main)">.</span></a>
             <ul class="nav-links">
                 <li><a href="#" class="nav-link" data-target="projects">Work</a></li>
-<li><a href="#" class="nav-link" data-target="about">Journey</a></li>
-<li><a href="#" class="nav-link" data-target="contact">Contact</a></li>
+                <li><a href="#" class="nav-link" data-target="about">Journey</a></li>
+                <li><a href="#" class="nav-link" data-target="contact">Contact</a></li>
             </ul>
             <div class="nav-actions">
-                <a href="assets/CV_Eoghan_Russell.pdf" class="btn-cv" download><i class="fas fa-download"></i> CV</a>
+                <a href="../assets/CV_Eoghan_Russell.pdf" class="btn-cv" download><i class="fas fa-download"></i> CV</a>
                 <div class="theme-toggle" id="theme-btn"><i class="fas fa-sun"></i></div>
             </div>
         </div>
@@ -250,9 +254,10 @@
 
         <div class="container">
             <div class="project-image-showcase glass">
-                <div class="mockup-screen">
-                    <i class="fas fa-chart-line mockup-icon"></i>
-                </div>
+                <video class="project-video" controls>
+                    <source src="../assets/campusnavvid.mp4" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
             </div>
         </div>
 
@@ -303,10 +308,18 @@
         <section class="container">
             <h3>Visual Process</h3>
             <div class="gallery-grid">
-                <div class="gallery-item glass"><i class="fas fa-pencil-ruler" style="font-size:2rem; color:var(--text-muted)"></i></div>
-                <div class="gallery-item glass"><i class="fas fa-code" style="font-size:2rem; color:var(--text-muted)"></i></div>
-                <div class="gallery-item glass"><i class="fas fa-mobile" style="font-size:2rem; color:var(--text-muted)"></i></div>
-                <div class="gallery-item glass"><i class="fas fa-check-circle" style="font-size:2rem; color:var(--text-muted)"></i></div>
+                <div class="gallery-item glass">
+                    <img src="../assets/apphelps.png" alt="App Helps">
+                </div>
+                <div class="gallery-item glass">
+                    <img src="../assets/keyfeatures.png" alt="Key Features">
+                </div>
+                <div class="gallery-item glass">
+                    <img src="../assets/logodesign.png" alt="Logo Design">
+                </div>
+                <div class="gallery-item glass">
+                    <img src="../assets/scannow.png" alt="Scan Now">
+                </div>
             </div>
         </section>
 
@@ -326,12 +339,26 @@
         </footer>
     </main>
 
+    <div class="chat-trigger" id="chatTrigger">
+        <i class="fas fa-comment-dots"></i>
+    </div>
+    <div class="chat-window" id="chatWindow">
+        <div class="chat-header">
+            <h4>Mini-Eoghan AI</h4>
+        </div>
+        <div class="chat-body" id="chatBody">
+            <div class="chat-msg bot">Hi! I'm Eoghan's digital assistant. How can I help?</div>
+        </div>
+        <div class="chat-input-area">
+            <input type="text" class="chat-input" placeholder="Type here..." id="chatInput">
+            <i class="fas fa-paper-plane" style="color:var(--accent-main); cursor:pointer;" id="sendBtn"></i>
+        </div>
+    </div>
+
     <script>
         // TRIGGER PAGE ANIMATION
         window.addEventListener('load', () => {
-            // Force scroll to top immediately
             window.scrollTo(0, 0);
-            // Trigger animation
             document.querySelector('main').classList.add('loaded');
         });
 
@@ -352,7 +379,6 @@
             const height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
             const scrolled = (winScroll / height) * 100;
             document.getElementById("scrollProgress").style.width = scrolled + "%";
-            
             const nav = document.querySelector('.navbar');
             if(window.scrollY > 50) nav.classList.add('scrolled');
             else nav.classList.remove('scrolled');
@@ -361,9 +387,8 @@
         // 3. THEME
         const themeBtn = document.getElementById('theme-btn');
         const body = document.body;
-        if(body.getAttribute('data-theme') === 'light') themeBtn.innerHTML = '<i class="fas fa-moon"></i>'; 
-        else themeBtn.innerHTML = '<i class="fas fa-sun"></i>';
-        
+        if(body.getAttribute('data-theme') === 'light') { themeBtn.innerHTML = '<i class="fas fa-moon"></i>'; } 
+        else { themeBtn.innerHTML = '<i class="fas fa-sun"></i>'; }
         themeBtn.addEventListener('click', () => {
             if(body.getAttribute('data-theme') === 'light') {
                 body.setAttribute('data-theme', 'dark');
@@ -374,7 +399,7 @@
             }
         });
 
-        // 4. PARTICLES (Hero)
+        // 4. PARTICLES
         const pCanvas = document.getElementById('particles-js');
         const pCtx = pCanvas.getContext('2d');
         pCanvas.width = window.innerWidth;
@@ -407,7 +432,7 @@
         }
         initParticles(); animateParticles();
 
-        // 5. MATRIX (Footer)
+        // 5. MATRIX
         const mCanvas = document.getElementById('matrix-canvas');
         const mCtx = mCanvas.getContext('2d');
         mCanvas.width = window.innerWidth; mCanvas.height = 300;
@@ -430,26 +455,55 @@
         }
         setInterval(drawMatrix, 50);
 
-// --- CLEAN URL NAVIGATION ---
+        // --- CLEAN URL NAVIGATION ---
         document.querySelectorAll('.nav-link').forEach(link => {
             link.addEventListener('click', (e) => {
                 e.preventDefault();
-                // 1. Remember the section we want
                 const section = link.getAttribute('data-target');
                 sessionStorage.setItem('scrollTarget', section);
-                
-                // 2. Go to homepage (Clean URL)
                 window.location.href = '/'; 
             });
         });
-        
+
+        // --- CHAT LOGIC ---
+        const chatTrigger = document.getElementById('chatTrigger');
+        const chatWindow = document.getElementById('chatWindow');
+        const chatBody = document.getElementById('chatBody');
+        const chatInput = document.getElementById('chatInput');
+        const sendBtn = document.getElementById('sendBtn');
+
+        chatTrigger.addEventListener('click', () => {
+            chatWindow.style.display = chatWindow.style.display === 'flex' ? 'none' : 'flex';
+        });
+
+        function getBotResponse(input) {
+            input = input.toLowerCase();
+            if (input.includes("hello") || input.includes("hi")) return "Hello! Thanks for visiting.";
+            else if (input.includes("email") || input.includes("contact")) return "Reach me at eoghanrussell@outlook.com";
+            else if (input.includes("cv")) return "Download my CV at the top right!";
+            else return "Thanks for the message! I'd recommend using the contact form above.";
+        }
+
+        function handleChat() {
+            const userText = chatInput.value.trim();
+            if (userText === "") return;
+            chatBody.innerHTML += `<div class="chat-msg" style="align-self:flex-end; background:var(--accent-main); color:#fff;">${userText}</div>`;
+            chatInput.value = '';
+            chatBody.scrollTop = chatBody.scrollHeight;
+            setTimeout(() => {
+                const botReply = getBotResponse(userText);
+                chatBody.innerHTML += `<div class="chat-msg bot">${botReply}</div>`;
+                chatBody.scrollTop = chatBody.scrollHeight;
+            }, 600);
+        }
+        sendBtn.addEventListener('click', handleChat);
+        chatInput.addEventListener('keypress', (e) => { if (e.key === 'Enter') handleChat(); });
+
         window.addEventListener('resize', () => {
             pCanvas.width = window.innerWidth;
             mCanvas.width = window.innerWidth;
             initParticles();
         });
-
-
     </script>
 </body>
 </html>
