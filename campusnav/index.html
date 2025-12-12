@@ -339,21 +339,6 @@
         </footer>
     </main>
 
-    <div class="chat-trigger" id="chatTrigger">
-        <i class="fas fa-comment-dots"></i>
-    </div>
-    <div class="chat-window" id="chatWindow">
-        <div class="chat-header">
-            <h4>Mini-Eoghan AI</h4>
-        </div>
-        <div class="chat-body" id="chatBody">
-            <div class="chat-msg bot">Hi! I'm Eoghan's digital assistant. How can I help?</div>
-        </div>
-        <div class="chat-input-area">
-            <input type="text" class="chat-input" placeholder="Type here..." id="chatInput">
-            <i class="fas fa-paper-plane" style="color:var(--accent-main); cursor:pointer;" id="sendBtn"></i>
-        </div>
-    </div>
 
     <script>
         // TRIGGER PAGE ANIMATION
@@ -465,39 +450,6 @@
             });
         });
 
-        // --- CHAT LOGIC ---
-        const chatTrigger = document.getElementById('chatTrigger');
-        const chatWindow = document.getElementById('chatWindow');
-        const chatBody = document.getElementById('chatBody');
-        const chatInput = document.getElementById('chatInput');
-        const sendBtn = document.getElementById('sendBtn');
-
-        chatTrigger.addEventListener('click', () => {
-            chatWindow.style.display = chatWindow.style.display === 'flex' ? 'none' : 'flex';
-        });
-
-        function getBotResponse(input) {
-            input = input.toLowerCase();
-            if (input.includes("hello") || input.includes("hi")) return "Hello! Thanks for visiting.";
-            else if (input.includes("email") || input.includes("contact")) return "Reach me at eoghanrussell@outlook.com";
-            else if (input.includes("cv")) return "Download my CV at the top right!";
-            else return "Thanks for the message! I'd recommend using the contact form above.";
-        }
-
-        function handleChat() {
-            const userText = chatInput.value.trim();
-            if (userText === "") return;
-            chatBody.innerHTML += `<div class="chat-msg" style="align-self:flex-end; background:var(--accent-main); color:#fff;">${userText}</div>`;
-            chatInput.value = '';
-            chatBody.scrollTop = chatBody.scrollHeight;
-            setTimeout(() => {
-                const botReply = getBotResponse(userText);
-                chatBody.innerHTML += `<div class="chat-msg bot">${botReply}</div>`;
-                chatBody.scrollTop = chatBody.scrollHeight;
-            }, 600);
-        }
-        sendBtn.addEventListener('click', handleChat);
-        chatInput.addEventListener('keypress', (e) => { if (e.key === 'Enter') handleChat(); });
 
         window.addEventListener('resize', () => {
             pCanvas.width = window.innerWidth;
