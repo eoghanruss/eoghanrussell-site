@@ -430,21 +430,25 @@
         }
         setInterval(drawMatrix, 50);
 
+// --- CLEAN URL NAVIGATION ---
+        document.querySelectorAll('.nav-link').forEach(link => {
+            link.addEventListener('click', (e) => {
+                e.preventDefault();
+                // 1. Remember the section we want
+                const section = link.getAttribute('data-target');
+                sessionStorage.setItem('scrollTarget', section);
+                
+                // 2. Go to homepage (Clean URL)
+                window.location.href = '/'; 
+            });
+        });
+        
         window.addEventListener('resize', () => {
             pCanvas.width = window.innerWidth;
             mCanvas.width = window.innerWidth;
             initParticles();
         });
-        document.querySelectorAll('.nav-link').forEach(link => {
-    link.addEventListener('click', function(e) {
-        e.preventDefault(); // stop default link behavior
-        const targetId = this.getAttribute('data-target');
-        const targetEl = document.getElementById(targetId);
-        if(targetEl) {
-            targetEl.scrollIntoView({ behavior: 'smooth', block: 'start' });
-        }
-    });
-});
+
     </script>
 </body>
 </html>
