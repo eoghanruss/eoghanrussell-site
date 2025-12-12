@@ -435,6 +435,16 @@
             mCanvas.width = window.innerWidth;
             initParticles();
         });
+        document.querySelectorAll('.nav-link').forEach(link => {
+    link.addEventListener('click', function(e) {
+        e.preventDefault(); // stop default link behavior
+        const targetId = this.getAttribute('data-target');
+        const targetEl = document.getElementById(targetId);
+        if(targetEl) {
+            targetEl.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+    });
+});
     </script>
 </body>
 </html>
