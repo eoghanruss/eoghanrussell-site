@@ -4,6 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Eoghan Russell</title>
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22 font-weight=%22bold%22 fill=%22%2338bdf8%22>E</text></svg>">
+    
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&family=Space+Grotesk:wght@300;500;700&display=swap" rel="stylesheet">
@@ -14,22 +16,15 @@
            1. CSS VARIABLES & THEME SETUP
            ========================================= */
         :root {
-            /* Default Dark Mode Palette */
             --bg-color: #0f1115;
             --bg-secondary: #161920;
             --text-main: #f0f2f5;
             --text-muted: #94a3b8;
-            
-            /* The "Electric Blue" Accent */
             --accent-main: #38bdf8; 
             --accent-glow: rgba(56, 189, 248, 0.4);
-            
-            /* Glassmorphism */
             --glass-bg: rgba(255, 255, 255, 0.03);
             --glass-border: rgba(255, 255, 255, 0.08);
             --shadow-soft: 0 10px 40px -10px rgba(0,0,0,0.5);
-            
-            /* UI Kit */
             --radius-sm: 8px;
             --radius-md: 16px;
             --radius-lg: 24px;
@@ -38,16 +33,13 @@
             --nav-height: 80px;
         }
 
-        /* Light Mode Overrides */
         [data-theme="light"] {
             --bg-color: #f8fafc;
             --bg-secondary: #ffffff;
             --text-main: #1e293b;
             --text-muted: #64748b;
-            
             --accent-main: #0284c7; 
             --accent-glow: rgba(2, 132, 199, 0.3);
-            
             --glass-bg: rgba(255, 255, 255, 0.6);
             --glass-border: rgba(0, 0, 0, 0.08);
             --shadow-soft: 0 10px 30px -10px rgba(0,0,0,0.1);
@@ -56,7 +48,7 @@
         /* =========================================
            2. GLOBAL RESET & UTILITIES
            ========================================= */
-        * { margin: 0; padding: 0; box-sizing: border-box; scroll-behavior: smooth; cursor: none; /* Hide default cursor */ }
+        * { margin: 0; padding: 0; box-sizing: border-box; scroll-behavior: smooth; cursor: none; }
         
         body {
             background-color: var(--bg-color);
@@ -74,7 +66,6 @@
         a { text-decoration: none; color: inherit; transition: 0.3s; }
         ul { list-style: none; }
 
-        /* Utility Classes */
         .glass {
             background: var(--glass-bg);
             backdrop-filter: blur(12px);
@@ -89,9 +80,10 @@
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
         }
+        .section-header { text-align: center; margin-bottom: 60px; }
 
         /* =========================================
-           3. CUSTOM CURSOR & SCROLL PROGRESS
+           3. CUSTOM CURSOR
            ========================================= */
         .cursor-dot {
             position: fixed; top: 0; left: 0; transform: translate(-50%, -50%);
@@ -100,13 +92,7 @@
             box-shadow: 0 0 10px var(--accent-main);
             transition: width 0.2s, height 0.2s;
         }
-        
-        /* Hover state for cursor */
-        body.hovering .cursor-dot {
-            width: 20px; height: 20px; opacity: 0.8;
-        }
-        
-        /* Scroll Progress Bar */
+        body.hovering .cursor-dot { width: 20px; height: 20px; opacity: 0.8; }
         .scroll-progress {
             position: fixed; top: 0; left: 0; height: 3px; background: var(--accent-main);
             width: 0%; z-index: 1001; transition: width 0.1s;
@@ -130,16 +116,13 @@
         .nav-link { position: relative; font-weight: 500; font-size: 0.95rem; color: var(--text-muted); }
         .nav-link:hover { color: var(--accent-main); }
         
-        /* Nav Actions (CV + Theme) */
         .nav-actions { display: flex; align-items: center; gap: 15px; }
-
         .btn-cv {
             padding: 8px 20px; border: 1px solid var(--glass-border); background: var(--glass-bg);
             border-radius: 50px; font-size: 0.9rem; display: flex; align-items: center; gap: 8px;
             transition: 0.3s; color: var(--text-main); font-weight: 500;
         }
         .btn-cv:hover { border-color: var(--accent-main); color: var(--accent-main); background: rgba(56, 189, 248, 0.1); }
-
         .theme-toggle {
             cursor: pointer; padding: 10px; border-radius: 50%;
             background: var(--glass-bg); border: 1px solid var(--glass-border);
@@ -156,14 +139,11 @@
         }
         #particles-js { position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: -1; }
         
-        .hero-content {
-            display: flex; justify-content: space-between; align-items: center; gap: 50px; width: 100%;
-        }
+        .hero-content { display: flex; justify-content: space-between; align-items: center; gap: 50px; width: 100%; }
         .hero-text { flex: 0 0 50%; } 
         .hero-visual { flex: 0 0 45%; position: relative; perspective: 1000px; }
-        
         .hero-text h1 { font-size: 4.5rem; margin-bottom: 20px; min-height: 160px; }
-        .typewriter { border-right: 3px solid var(--accent-main); padding-right: 5px; animation: blink 0.7s infinite; }
+        .typewriter-cursor { border-right: 3px solid var(--accent-main); margin-left: 5px; animation: blink 0.7s infinite; }
         
         .tilt-card {
             width: 100%; height: 500px;
@@ -172,7 +152,6 @@
             transform-style: preserve-3d; box-shadow: var(--shadow-soft); border: 1px solid var(--glass-border);
         }
         .tilt-card-inner { transform: translateZ(50px); text-align: center; }
-        .tilt-icon { font-size: 5rem; color: var(--accent-main); margin-bottom: 20px; }
         
         .btn {
             padding: 12px 30px; border-radius: 50px; font-weight: 600; cursor: pointer;
@@ -187,10 +166,9 @@
            6. INFINITE MARQUEE
            ========================================= */
         .marquee-section { padding: 40px 0; background: var(--bg-secondary); overflow: hidden; border-top: 1px solid var(--glass-border); border-bottom: 1px solid var(--glass-border); }
-        .marquee-content { display: flex; gap: 50px; animation: scroll 20s linear infinite; width: max-content; }
-        .marquee-item { font-size: 1.5rem; font-weight: 600; color: var(--text-muted); display: flex; align-items: center; gap: 10px; opacity: 0.7; }
+        .marquee-content { display: flex; gap: 0; animation: scroll 30s linear infinite; width: max-content; }
+        .marquee-item { font-size: 1.5rem; font-weight: 600; color: var(--text-muted); display: flex; align-items: center; gap: 10px; opacity: 0.7; padding-right: 80px; }
         .marquee-item i { color: var(--accent-main); }
-        
         @keyframes scroll { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
 
         /* =========================================
@@ -212,13 +190,21 @@
             display: flex; flex-direction: column; justify-content: center; align-items: center;
         }
         .project-back {
-            background: var(--accent-main); color: #fff; transform: rotateY(180deg);
+            background-color: #000;
+            background-size: cover; 
+            background-position: center;
+            color: #fff; transform: rotateY(180deg);
             display: flex; flex-direction: column; justify-content: center; align-items: center; padding: 20px;
+            position: relative;
         }
-        [data-theme="dark"] .project-back { color: #000; }
-        .project-icon { font-size: 3rem; margin-bottom: 20px; color: var(--accent-main); }
-        .project-front .project-icon { background: var(--glass-bg); padding: 20px; border-radius: 50%; }
-
+        .project-back::before {
+            content: ''; position: absolute; top:0; left:0; width:100%; height:100%;
+            background: rgba(0,0,0,0.7); z-index: 1;
+        }
+        .project-back h3, .project-back p, .project-back .btn { position: relative; z-index: 2; }
+        
+        .project-logo { width: 100px; height: auto; margin-bottom: 20px; object-fit: contain; }
+        
         /* =========================================
            8. TIMELINE
            ========================================= */
@@ -244,7 +230,6 @@
         /* =========================================
            9. WIDGETS (Chat)
            ========================================= */
-        /* Chat Trigger */
         .chat-trigger {
             position: fixed; bottom: 30px; right: 30px; width: 60px; height: 60px;
             background: var(--accent-main); border-radius: 50%; display: flex;
@@ -254,7 +239,6 @@
         [data-theme="dark"] .chat-trigger { color: #000; }
         .chat-trigger:hover { transform: scale(1.1) rotate(10deg); }
         
-        /* Chat Window */
         .chat-window {
             position: fixed; bottom: 100px; right: 30px; width: 300px; height: 400px;
             background: var(--bg-secondary); border: 1px solid var(--glass-border);
@@ -269,7 +253,7 @@
         .chat-input { flex: 1; background: transparent; border: none; color: var(--text-main); outline: none; }
 
         /* =========================================
-           10. CONTACT & FOOTER (MATRIX)
+           10. CONTACT & FOOTER
            ========================================= */
         .contact-form { max-width: 600px; margin: 0 auto; }
         .input-group { position: relative; margin-bottom: 30px; }
@@ -283,28 +267,20 @@
             position: relative; padding: 50px 0; text-align: center; border-top: 1px solid var(--glass-border); 
             margin-top: 100px; overflow: hidden;
         }
-        #matrix-canvas {
-            position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 0; opacity: 0.1;
-        }
+        #matrix-canvas { position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 0; opacity: 0.1; }
         .footer-content { position: relative; z-index: 1; }
 
-        /* Keyframes */
         @keyframes blink { 50% { border-color: transparent; } }
 
-        /* Mobile Responsive */
         @media (max-width: 900px) {
-            * { cursor: default; } /* Reset cursor on touch */
+            * { cursor: default; } 
             .cursor-dot { display: none; }
             .hero-content { flex-direction: column; text-align: center; }
             .hero-text { flex: auto; order: 1; }
             .hero-visual { display: none; }
             .hero-text h1 { font-size: 3rem; min-height: auto; }
-            
-            /* Navbar Mobile */
-            .nav-links { display: none; } /* Hide the text links */
-            /* nav-actions (CV and Toggle) remain visible */
+            .nav-links { display: none; }
             .nav-actions { margin-left: auto; } 
-            
             .timeline-item { width: 100%; left: 0 !important; text-align: left !important; padding-left: 30px; }
             .timeline-line { left: 10px; }
             .timeline-dot { left: 2px !important; }
@@ -314,22 +290,18 @@
 <body id="top" data-theme="dark">
 
     <div class="cursor-dot" data-cursor-dot></div>
-    
     <div class="scroll-progress" id="scrollProgress"></div>
 
     <nav class="navbar glass">
         <div class="container nav-container">
             <a href="#" class="logo">EOGHAN<span style="color:var(--accent-main)">.</span></a>
-            
             <ul class="nav-links">
                 <li><a href="#projects" class="nav-link">Work</a></li>
                 <li><a href="#about" class="nav-link">Journey</a></li>
                 <li><a href="#contact" class="nav-link">Contact</a></li>
             </ul>
-
             <div class="nav-actions">
                 <a href="assets/CV_Eoghan_Russell.pdf" class="btn-cv" download><i class="fas fa-download"></i> CV</a>
-                
                 <div class="theme-toggle" id="theme-btn">
                     <i class="fas fa-sun"></i>
                 </div>
@@ -342,7 +314,7 @@
         <div class="container hero-content">
             <div class="hero-text">
                 <p>HELLO, </p>
-                <h1>I Am <span class="text-gradient" id="typewriter"></span><span class="typewriter"></span></h1>
+                <h1>I Am <span class="text-gradient" id="typewriter"></span><span class="typewriter-cursor"></span></h1>
                 <p>A software development graduate with hands-on experience across tech, communications, and operations. Skilled in social media, HR support, 
                     sales administration, and internal communications, with a focus on creating smooth systems, clear messaging, and real results. Combines technical 
                     skill and practical experience to help teams work more efficiently and projects run seamlessly.</p><br>
@@ -351,13 +323,13 @@
                     <a href="#contact" class="btn btn-outline">Contact Me</a>
                 </div>
             </div>
-<div class="hero-visual">
-    <div class="tilt-card glass" id="tiltCard">
-        <div class="tilt-card-inner">
-            <img src="assets/profile.jpg" alt="Eoghan Russell" style="width:100%; height:100%; object-fit:cover; border-radius: var(--radius-lg);">
-        </div>
-    </div>
-</div>
+            <div class="hero-visual">
+                <div class="tilt-card glass" id="tiltCard">
+                    <div class="tilt-card-inner">
+                        <img src="assets/profile.jpg" alt="Eoghan Russell" style="width:100%; height:100%; object-fit:cover; border-radius: var(--radius-lg);">
+                    </div>
+                </div>
+            </div>
         </div>
     </section>
 
@@ -392,43 +364,42 @@
                 <div class="project-card">
                     <div class="project-inner">
                         <div class="project-front glass">
-                            <i class="fas fa-laptop-code project-icon"></i>
+                            <img src="assets/campusnavlogo.png" alt="CampusNav" class="project-logo">
                             <h3>CampusNav</h3>
                             <p style="color:var(--text-muted)"></p>
                         </div>
-                        <div class="project-back">
+                        <div class="project-back" style="background-image: url('https://images.unsplash.com/photo-1541339907198-e08756dedf3f?q=80&w=600&auto=format&fit=crop');">
                             <h3>CampusNav</h3>
-                            <p>CampusNav is a student-friendly navigation app designed to help first-year students easily find their way around 
-                                campus. With a sleek compass interface and clear directions, it makes exploring college simple</p>
-                            <button class="btn" style="background:#fff; color:#000; margin-top:20px;">View Case Study</button>
+                            <p>CampusNav is a student-friendly navigation app designed to help first-year students easily find their way around campus.</p>
+                            <a href="campusnavproject.html" class="btn" style="background:#fff; color:#000; margin-top:20px;">View Case Study</a>
                         </div>
                     </div>
                 </div>
                 <div class="project-card">
                     <div class="project-inner">
                         <div class="project-front glass">
-                            <i class="fas fa-mobile-alt project-icon"></i>
+                            <img src="assets/celestiallogo.png" alt="Celestial" class="project-logo">
                             <h3>Celestial</h3>
                             <p style="color:var(--text-muted)"></p>
                         </div>
-                        <div class="project-back">
+                        <div class="project-back" style="background-image: url('https://images.unsplash.com/photo-1519741497674-611481863552?q=80&w=600&auto=format&fit=crop');">
                             <h3>Celestial</h3>
-                            <p>My Wedding Planner app helps couples organize every detail of their big day, from guest lists to seating charts, making wedding planning simple and stress-free</p>
-                            <button class="btn" style="background:#fff; color:#000; margin-top:20px;">View Case Study</button>
+                            <p>My Wedding Planner app helps couples organize every detail of their big day, from guest lists to seating charts.</p>
+                            <a href="celestialproject.html" class="btn" style="background:#fff; color:#000; margin-top:20px;">View Case Study</a>
                         </div>
                     </div>
                 </div>
                 <div class="project-card">
                     <div class="project-inner">
                         <div class="project-front glass">
-                            <i class="fas fa-vr-cardboard project-icon"></i>
+                            <img src="assets/fitness.png" alt="FitTrack" class="project-logo">
                             <h3>FitTrack</h3>
                             <p style="color:var(--text-muted)"></p>
                         </div>
-                        <div class="project-back">
+                        <div class="project-back" style="background-image: url('https://images.unsplash.com/photo-1517836357463-d25dfeac3438?q=80&w=600&auto=format&fit=crop');">
                             <h3>FitTrack</h3>
-                            <p>FitTrack is a workout app that helps you plan, track, and level up your fitness routine, keeping you motivated and on track toward your goals</p>
-                            <button class="btn" style="background:#fff; color:#000; margin-top:20px;">View Case Study</button>
+                            <p>FitTrack is a workout app that helps you plan, track, and level up your fitness routine.</p>
+                            <a href="fitness.html" class="btn" style="background:#fff; color:#000; margin-top:20px;">View Case Study</a>
                         </div>
                     </div>
                 </div>
@@ -453,25 +424,25 @@
                     <div class="timeline-dot"></div>
                     <h3>Internal Communications Director</h3>
                     <span style="color:var(--accent-main)">2022 - 2025</span>
-                    <p style="margin-top:10px; color:var(--text-muted)">Spent four summers in the US on a J-1 working at Camp Manitou teaching at kids basic coding, and most recently served as Internal Communications Director handling schedules, daily newsletters, and trip planning</p>
+                    <p style="margin-top:10px; color:var(--text-muted)">Spent four summers in the US on a J-1 working at Camp Manitou teaching at kids basic coding, and most recently served as Internal Communications Director.</p>
                 </div>
                 <div class="timeline-item">
                     <div class="timeline-dot"></div>
                     <h3>Marketing & HR Associate</h3>
                     <span style="color:var(--accent-main)">2024 - 2024</span>
-                    <p style="margin-top:10px; color:var(--text-muted)">Supported brand promotion, improved HR filing systems, and used social media at Ei Electronics to attract candidates and showcase company culture</p>
+                    <p style="margin-top:10px; color:var(--text-muted)">Supported brand promotion, improved HR filing systems, and used social media at Ei Electronics.</p>
                 </div>
                 <div class="timeline-item">
                     <div class="timeline-dot"></div>
                     <h3>Social Media and Brand Promotion Specialist</h3>
                     <span style="color:var(--accent-main)">2023 - 2025</span>
-                    <p style="margin-top:10px; color:var(--text-muted)">Created engaging TikTok and Instagram content, stayed updated on trends, and interacted with followers to grow a loyal community with Camp Counselors USA</p>
+                    <p style="margin-top:10px; color:var(--text-muted)">Created engaging TikTok and Instagram content, stayed updated on trends, and interacted with followers to grow a loyal community.</p>
                 </div>
                 <div class="timeline-item">
                     <div class="timeline-dot"></div>
                     <h3>Immersive Digital Media – BSc (Hons)</h3>
                     <span style="color:var(--accent-main)">2021 - 2025</span>
-                    <p style="margin-top:10px; color:var(--text-muted)">Specialized in Digital Media such as UI/UX Design and Software Development at the Technological University of the Shannon</p>
+                    <p style="margin-top:10px; color:var(--text-muted)">Specialized in Digital Media such as UI/UX Design and Software Development at the Technological University of the Shannon.</p>
                 </div>
             </div>
         </div>
@@ -482,7 +453,6 @@
             <div class="section-header">
                 <h2>Contact Me</h2><br><br>
             </div>
-            
             <form action="https://formspree.io/f/mgvgndjn" method="POST" class="contact-form glass" style="padding:40px; border-radius:var(--radius-md);">
                 <div class="input-group">
                     <input type="text" name="name" class="input-field" placeholder="Name" required>
@@ -495,7 +465,6 @@
                 </div>
                 <button type="submit" class="btn btn-primary">Send Message</button>
             </form>
-
         </div>
     </section>
 
@@ -505,11 +474,11 @@
             <p style="color:var(--text-muted)">&copy; 2026 Eoghan Russell</p>
             <div style="margin-top:20px; font-size:1.2rem;">
                 <a href="https://www.linkedin.com/in/eoghan-russell/" target="_blank">
-    <i class="fab fa-linkedin" style="margin:0 10px;"></i>
-</a>
-<a href="https://www.instagram.com/eoghanruss" target="_blank">
-    <i class="fab fa-instagram" style="margin:0 10px;"></i>
-</a>
+                    <i class="fab fa-linkedin" style="margin:0 10px;"></i>
+                </a>
+                <a href="https://www.instagram.com/eoghanruss" target="_blank">
+                    <i class="fab fa-instagram" style="margin:0 10px;"></i>
+                </a>
             </div>
         </div>
     </footer>
@@ -531,48 +500,36 @@
     </div>
 
     <script>
-        // --- 1. CUSTOM CURSOR & HOVER EFFECTS ---
+        // --- Custom Cursor ---
         const cursorDot = document.querySelector('[data-cursor-dot]');
-        
         window.addEventListener('mousemove', function(e) {
-            const posX = e.clientX;
-            const posY = e.clientY;
-            
-            // Dot follows instantly
-            cursorDot.style.left = `${posX}px`;
-            cursorDot.style.top = `${posY}px`;
+            cursorDot.style.left = `${e.clientX}px`;
+            cursorDot.style.top = `${e.clientY}px`;
         });
-
-        // Add magnetic/hover effect to all clickable elements
         const clickables = document.querySelectorAll('a, button, .chat-trigger, .project-card, .theme-toggle');
         clickables.forEach(el => {
             el.addEventListener('mouseenter', () => document.body.classList.add('hovering'));
             el.addEventListener('mouseleave', () => document.body.classList.remove('hovering'));
         });
 
-        // --- 2. SCROLL PROGRESS BAR ---
+        // --- Scroll Progress ---
         window.addEventListener('scroll', () => {
             const winScroll = document.body.scrollTop || document.documentElement.scrollTop;
             const height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
             const scrolled = (winScroll / height) * 100;
             document.getElementById("scrollProgress").style.width = scrolled + "%";
-            
-            // Navbar Glass Effect
             const nav = document.querySelector('.navbar');
             if(window.scrollY > 50) nav.classList.add('scrolled');
             else nav.classList.remove('scrolled');
         });
 
-        // --- 3. THEME SWITCHER ---
+        // --- Theme Switcher ---
         const themeBtn = document.getElementById('theme-btn');
         const body = document.body;
-        // Initialize Icon
         if(body.getAttribute('data-theme') === 'light') { themeBtn.innerHTML = '<i class="fas fa-moon"></i>'; } 
         else { themeBtn.innerHTML = '<i class="fas fa-sun"></i>'; }
-
         themeBtn.addEventListener('click', () => {
-            const currentTheme = body.getAttribute('data-theme');
-            if(currentTheme === 'light') {
+            if(body.getAttribute('data-theme') === 'light') {
                 body.setAttribute('data-theme', 'dark');
                 themeBtn.innerHTML = '<i class="fas fa-sun"></i>';
             } else {
@@ -581,35 +538,35 @@
             }
         });
 
-        // --- 4. TYPEWRITER ---
-        const words = ["Eoghan Russell", "Web Applications", "Interactive UIs"];
-        let i = 0;
-        function typeWriter() {
-            const heading = document.getElementById('typewriter');
-            const word = words[i];
-            let c = 0;
-            const type = () => {
-                if (c < word.length) {
-                    heading.innerHTML += word.charAt(c);
-                    c++;
-                    setTimeout(type, 100);
-                } else { setTimeout(erase, 2000); }
-            };
-            const erase = () => {
-                if (c > 0) {
-                    heading.innerHTML = word.substring(0, c-1);
-                    c--;
-                    setTimeout(erase, 50);
-                } else {
-                    i = (i + 1) % words.length;
-                    type();
-                }
-            };
-            type();
+        // --- Typewriter ---
+        const textElement = document.getElementById('typewriter');
+        const phrases = ["Eoghan Russell", "A Developer", "A Designer", "A Problem Solver"];
+        let phraseIndex = 0;
+        let charIndex = 0;
+        let isDeleting = false;
+        function typeEffect() {
+            const currentPhrase = phrases[phraseIndex];
+            if (isDeleting) {
+                textElement.textContent = currentPhrase.substring(0, charIndex - 1);
+                charIndex--;
+            } else {
+                textElement.textContent = currentPhrase.substring(0, charIndex + 1);
+                charIndex++;
+            }
+            let typeSpeed = isDeleting ? 50 : 100;
+            if (!isDeleting && charIndex === currentPhrase.length) {
+                isDeleting = true;
+                typeSpeed = 2000;
+            } else if (isDeleting && charIndex === 0) {
+                isDeleting = false;
+                phraseIndex = (phraseIndex + 1) % phrases.length;
+                typeSpeed = 500;
+            }
+            setTimeout(typeEffect, typeSpeed);
         }
-        typeWriter();
+        document.addEventListener('DOMContentLoaded', typeEffect);
 
-        // --- 5. 3D TILT EFFECT ---
+        // --- 3D Tilt ---
         const card = document.getElementById('tiltCard');
         document.addEventListener('mousemove', (e) => {
             if(window.innerWidth < 900) return;
@@ -618,7 +575,7 @@
             card.style.transform = `rotateY(${x}deg) rotateX(${y}deg)`;
         });
 
-        // --- 6. SCROLL OBSERVER ---
+        // --- Intersection Observer ---
         const observer = new IntersectionObserver((entries) => {
             entries.forEach(entry => {
                 if(entry.isIntersecting) entry.target.classList.add('show');
@@ -626,13 +583,12 @@
         });
         document.querySelectorAll('.timeline-item').forEach(el => observer.observe(el));
 
-        // --- 7. PARTICLES (HEADER) ---
+        // --- Particles ---
         const pCanvas = document.getElementById('particles-js');
         const pCtx = pCanvas.getContext('2d');
         pCanvas.width = window.innerWidth;
         pCanvas.height = window.innerHeight;
         let particles = [];
-
         class Particle {
             constructor() {
                 this.x = Math.random() * pCanvas.width;
@@ -642,51 +598,37 @@
                 this.speedY = Math.random() * 1 - 0.5;
             }
             update() {
-                this.x += this.speedX;
-                this.y += this.speedY;
+                this.x += this.speedX; this.y += this.speedY;
                 if(this.x > pCanvas.width || this.x < 0) this.speedX *= -1;
                 if(this.y > pCanvas.height || this.y < 0) this.speedY *= -1;
             }
             draw() {
                 const isLight = document.body.getAttribute('data-theme') === 'light';
                 pCtx.fillStyle = isLight ? 'rgba(2, 132, 199, 0.2)' : 'rgba(56, 189, 248, 0.2)';
-                pCtx.beginPath();
-                pCtx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
-                pCtx.fill();
+                pCtx.beginPath(); pCtx.arc(this.x, this.y, this.size, 0, Math.PI * 2); pCtx.fill();
             }
         }
-        function initParticles() {
-            particles = [];
-            for(let j=0; j<50; j++) particles.push(new Particle());
-        }
+        function initParticles() { particles = []; for(let j=0; j<50; j++) particles.push(new Particle()); }
         function animateParticles() {
             pCtx.clearRect(0,0, pCanvas.width, pCanvas.height);
             particles.forEach(p => { p.update(); p.draw(); });
             requestAnimationFrame(animateParticles);
         }
-        initParticles();
-        animateParticles();
+        initParticles(); animateParticles();
 
-        // --- 8. MATRIX RAIN (FOOTER) ---
+        // --- Matrix Footer ---
         const mCanvas = document.getElementById('matrix-canvas');
         const mCtx = mCanvas.getContext('2d');
-        mCanvas.width = window.innerWidth;
-        mCanvas.height = 300; // Footer height approx
-        
+        mCanvas.width = window.innerWidth; mCanvas.height = 300;
         const letters = "01010101ABCDEFGHIJKLMNOPQRSTUVWXYZ";
         const fontSize = 14;
         const columns = mCanvas.width / fontSize;
         const drops = Array(Math.floor(columns)).fill(1);
-
         function drawMatrix() {
-            // Semi-transparent black to create trail effect
             const isLight = document.body.getAttribute('data-theme') === 'light';
             mCtx.fillStyle = isLight ? 'rgba(248, 250, 252, 0.1)' : 'rgba(15, 17, 21, 0.1)';
             mCtx.fillRect(0, 0, mCanvas.width, mCanvas.height);
-            
-            mCtx.fillStyle = isLight ? '#0284c7' : '#0F0'; // Green usually, but let's stick to theme (Blue)
-            if(!isLight) mCtx.fillStyle = '#38bdf8'; // Electric blue for dark mode
-
+            mCtx.fillStyle = isLight ? '#0284c7' : '#38bdf8';
             mCtx.font = fontSize + "px monospace";
             for(let k=0; k<drops.length; k++) {
                 const text = letters.charAt(Math.floor(Math.random()*letters.length));
@@ -697,32 +639,77 @@
         }
         setInterval(drawMatrix, 50);
 
-        // --- 9. CHAT WIDGET ---
+        // --- 9. SMART CHAT WIDGET ---
         const chatTrigger = document.getElementById('chatTrigger');
         const chatWindow = document.getElementById('chatWindow');
+        const chatBody = document.getElementById('chatBody');
+        const chatInput = document.getElementById('chatInput');
+        const sendBtn = document.getElementById('sendBtn');
+
+        // Toggle Window
         chatTrigger.addEventListener('click', () => {
             chatWindow.style.display = chatWindow.style.display === 'flex' ? 'none' : 'flex';
         });
-        document.getElementById('sendBtn').addEventListener('click', () => {
-            const input = document.getElementById('chatInput');
-            if(input.value.trim() === '') return;
-            const chatBody = document.getElementById('chatBody');
-            chatBody.innerHTML += `<div class="chat-msg" style="align-self:flex-end; background:var(--accent-main); color:#fff;">${input.value}</div>`;
-            input.value = '';
+
+        // Smart Response Logic
+        function getBotResponse(input) {
+            input = input.toLowerCase();
+
+            if (input.includes("hello") || input.includes("hi") || input.includes("hey")) {
+                return "Hello! Thanks for visiting. Feel free to ask about my skills, projects, or how to contact me.";
+            } 
+            else if (input.includes("email") || input.includes("contact") || input.includes("reach")) {
+                return "You can reach Eoghan at <strong>eoghanrussell@outlook.com</strong> or use the form in the Contact section!";
+            } 
+            else if (input.includes("cv") || input.includes("resume")) {
+                return "You can download my CV from the top right corner of the page!";
+            } 
+            else if (input.includes("skills") || input.includes("stack") || input.includes("technology")) {
+                return "I specialize in <strong>React, JavaScript, HTML/CSS, and Node.js</strong>. I also have experience with AWS and Figma.";
+            } 
+            else if (input.includes("project") || input.includes("work")) {
+                return "I've built dashboards, mobile apps, and fitness trackers. Scroll up to the <strong>'Previous Projects'</strong> section to see case studies.";
+            } 
+            else if (input.includes("hire") || input.includes("job") || input.includes("open")) {
+                return "Yes! I am currently open to new opportunities. Please reach out via the contact form.";
+            } 
+            else if (input.includes("joke")) {
+                return "Why do programmers prefer dark mode? Because light attracts bugs! 🐛";
+            }
+            else {
+                return "That's a great question! To get the best answer, I'd recommend sending Eoghan a quick message via the Contact section.";
+            }
+        }
+
+        // Handle Send
+        function handleChat() {
+            const userText = chatInput.value.trim();
+            if (userText === "") return;
+
+            // 1. Add User Message
+            chatBody.innerHTML += `<div class="chat-msg" style="align-self:flex-end; background:var(--accent-main); color:#fff;">${userText}</div>`;
+            chatInput.value = '';
+            chatBody.scrollTop = chatBody.scrollHeight;
+
+            // 2. Simulate "Thinking" Delay
             setTimeout(() => {
-                chatBody.innerHTML += `<div class="chat-msg bot">Thanks for reaching out! Eoghan will see this message soon.</div>`;
+                const botReply = getBotResponse(userText);
+                chatBody.innerHTML += `<div class="chat-msg bot">${botReply}</div>`;
                 chatBody.scrollTop = chatBody.scrollHeight;
-            }, 1000);
+            }, 600);
+        }
+
+        // Event Listeners
+        sendBtn.addEventListener('click', handleChat);
+        chatInput.addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') handleChat();
         });
-        
-        // Handle Resize
+
         window.addEventListener('resize', () => {
             pCanvas.width = window.innerWidth;
-            pCanvas.height = window.innerHeight;
             mCanvas.width = window.innerWidth;
             initParticles();
         });
     </script>
 </body>
-
 </html>
