@@ -464,7 +464,7 @@
             <div class="section-header">
                 <h2>Contact Me</h2><br><br>
             </div>
-            <form action="https://formspree.io/f/mgvgndjn" method="POST" class="contact-form glass" style="padding:40px; border-radius:var(--radius-md);">
+            <form action="https://formspree.io/f/mgvgndjn" method="POST" class="contact-form glass" id="contactForm" style="padding:40px; border-radius:var(--radius-md);">
     
     <input type="hidden" name="_next" value="https://eoghanrussell.com/success">
 
@@ -762,9 +762,50 @@
             mCanvas.width = window.innerWidth;
             initParticles();
         });
+
+        // --- AJAX FORM SUBMISSION ---
+const form = document.getElementById('contactForm');
+
+form.addEventListener('submit', async function(e) {
+    e.preventDefault(); // Stop the page from reloading/leaving
+    
+    // Change button text to show it's working
+    const btn = form.querySelector('button');
+    const originalText = btn.innerText;
+    btn.innerText = 'Sending...';
+    btn.style.opacity = '0.7';
+
+    // Send data to Formspree using Fetch (Background)
+    const data = new FormData(form);
+    
+    try {
+        const response = await fetch(form.action, {
+            method: form.method,
+            body: data,
+            headers: {
+                'Accept': 'application/json'
+            }
+        });
+
+        if (response.ok) {
+            // Success! Go to your custom folder path
+            window.location.href = '/success/'; 
+        } else {
+            // Error handling
+            alert("Oops! There was a problem sending your form.");
+            btn.innerText = originalText;
+            btn.style.opacity = '1';
+        }
+    } catch (error) {
+        alert("Oops! There was a problem sending your form.");
+        btn.innerText = originalText;
+        btn.style.opacity = '1';
+    }
+});
     </script>
 </body>
 </html>
+
 
 
 
