@@ -95,10 +95,11 @@
             display: flex; align-items: center; justify-content: center;
             text-align: center; position: relative;
             padding-top: var(--nav-height);
+            flex-direction: column;
         }
         
         .error-content h1 {
-            font-size: 10rem; line-height: 1; margin-bottom: 20px;
+            font-size: 8rem; line-height: 1; margin-bottom: 10px;
             background: linear-gradient(135deg, var(--text-main), var(--accent-main));
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
@@ -117,7 +118,77 @@
         .btn-primary:hover { box-shadow: 0 0 20px rgba(56, 189, 248, 0.4); transform: translateY(-2px); }
 
         /* =========================================
-           6. FOOTER
+           6. DINO GAME STYLES
+           ========================================= */
+        #game-container {
+            position: relative;
+            width: 100%;
+            max-width: 600px;
+            height: 150px;
+            margin: 0 auto 30px auto;
+            border-bottom: 2px solid var(--text-muted);
+            overflow: hidden;
+            background: rgba(255,255,255,0.02); /* Slight highlight area */
+            border-radius: 8px;
+        }
+        #dino {
+            position: absolute;
+            bottom: 0;
+            left: 20px;
+            width: 40px;
+            height: 40px;
+            background-color: var(--accent-main); /* Your blue dino! */
+            background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="black"><path d="M20 20h-4v-4h-4v4h-4v-4H4v4H0v-4h4v-4h4v4h4v-4h4v4h4v-4h-4v-4h4v-4h-4v-4H8v4H4v4H0v4h4v4h4v-4h4v4h4v-4h4v4z"/></svg>'); 
+            /* Simple pixel placeholder or just a colored box */
+            background-size: cover;
+            mask-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 100 100"><rect x="20" y="20" width="60" height="60" /></svg>'); 
+            /* We'll stick to a CSS box for simplicity and speed */
+            background: var(--accent-main);
+            border-radius: 4px;
+        }
+        .cactus {
+            position: absolute;
+            bottom: 0;
+            width: 20px;
+            height: 40px;
+            background-color: var(--text-muted);
+            left: 600px; /* Start off screen */
+            border-radius: 4px 4px 0 0;
+        }
+        .jump {
+            animation: jump 0.5s linear;
+        }
+        @keyframes jump {
+            0% { bottom: 0; }
+            30% { bottom: 100px; }
+            70% { bottom: 100px; }
+            100% { bottom: 0; }
+        }
+        #score-board {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            font-family: 'Space Grotesk', monospace;
+            color: var(--text-muted);
+            font-size: 1.2rem;
+        }
+        #game-msg {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            color: var(--text-main);
+            font-family: 'Space Grotesk', sans-serif;
+            background: rgba(0,0,0,0.8);
+            padding: 10px 20px;
+            border-radius: 8px;
+            display: none;
+            cursor: pointer;
+            z-index: 10;
+        }
+
+        /* =========================================
+           7. FOOTER
            ========================================= */
         footer {
             padding: 40px 0; text-align: center; border-top: 1px solid var(--glass-border); 
@@ -129,6 +200,7 @@
         @media (max-width: 768px) {
             .cursor-dot { display: none; }
             .error-content h1 { font-size: 6rem; }
+            #game-container { max-width: 90%; }
         }
     </style>
 </head>
@@ -147,8 +219,20 @@
         <div class="container error-content">
             <h1>404</h1>
             <h2>Page Not Found</h2>
-            <p>Oops! The page you are looking for has vanished into the digital void.</p>
-            <a href="/" class="btn btn-primary">
+            <p>Oops! The page you are looking for has vanished.</p>
+            
+            <div id="game-container" onclick="jump()">
+                <div id="score-board">Score: 0</div>
+                <div id="game-msg">Press Space / Tap to Start</div>
+                <div id="dino"></div>
+                <div id="cactus" class="cactus"></div>
+            </div>
+
+            <p style="font-size: 0.9rem; margin-top: -20px; color: var(--text-muted);">
+                (Press Space or Tap to Play)
+            </p>
+
+            <a href="/" class="btn btn-primary" style="margin-top: 20px;">
                 <i class="fas fa-home"></i> Back to Home
             </a>
         </div>
@@ -167,7 +251,7 @@
             cursorDot.style.left = `${e.clientX}px`;
             cursorDot.style.top = `${e.clientY}px`;
         });
-        document.querySelectorAll('a, button').forEach(el => {
+        document.querySelectorAll('a, button, #game-container').forEach(el => {
             el.addEventListener('mouseenter', () => document.body.classList.add('hovering'));
             el.addEventListener('mouseleave', () => document.body.classList.remove('hovering'));
         });
@@ -211,6 +295,97 @@
             pCanvas.height = window.innerHeight;
             initParticles();
         });
+
+        // --- DINO GAME LOGIC (Simplified) ---
+        const dino = document.getElementById("dino");
+        const cactus = document.getElementById("cactus");
+        const scoreBoard = document.getElementById("score-board");
+        const gameMsg = document.getElementById("game-msg");
+        let isJumping = false;
+        let isGameOver = true; // Start in 'wait' state
+        let score = 0;
+        let scoreInterval;
+
+        // Show start message immediately
+        gameMsg.style.display = "block";
+
+        function jump() {
+            if (isGameOver) {
+                startGame();
+                return;
+            }
+            if (!isJumping) {
+                isJumping = true;
+                dino.classList.add("jump");
+                setTimeout(function () {
+                    dino.classList.remove("jump");
+                    isJumping = false;
+                }, 500); // Must match animation duration
+            }
+        }
+
+        function startGame() {
+            isGameOver = false;
+            score = 0;
+            scoreBoard.innerText = "Score: " + score;
+            gameMsg.style.display = "none";
+            cactus.style.animation = "none"; // reset animation
+            cactus.offsetHeight; /* trigger reflow */
+            cactus.style.animation = "cactusMove 1.5s infinite linear"; // Start moving cactus
+            
+            // Start Scoring
+            clearInterval(scoreInterval);
+            scoreInterval = setInterval(() => {
+                score++;
+                scoreBoard.innerText = "Score: " + score;
+            }, 100);
+        }
+
+        // Key Listener (Spacebar)
+        document.addEventListener('keydown', function(event) {
+            if (event.code === 'Space') {
+                event.preventDefault(); // Prevent scrolling page
+                jump();
+            }
+        });
+
+        // Collision Check Loop
+        let checkDead = setInterval(function() {
+            if (isGameOver) return;
+
+            let dinoTop = parseInt(window.getComputedStyle(dino).getPropertyValue("top"));
+            // Since top isn't animated (bottom is), let's check bottom logic or simply use getBoundingClientRect
+            // Cleaner way:
+            const dinoRect = dino.getBoundingClientRect();
+            const cactusRect = cactus.getBoundingClientRect();
+
+            // Simple collision logic
+            // Cactus is hitting dino horizontally AND dino is low enough
+            // (Note: Rect provides screen coordinates)
+            
+            // Check horizontal overlap
+            if (cactusRect.left < dinoRect.right && cactusRect.right > dinoRect.left &&
+                dinoRect.bottom > cactusRect.top + 10 // +10 buffer specifically for "feet"
+            ) {
+                // Collision!
+                isGameOver = true;
+                cactus.style.animation = "none";
+                gameMsg.innerText = "Game Over! Score: " + score + "\n(Press Space to Retry)";
+                gameMsg.style.display = "block";
+                clearInterval(scoreInterval);
+            }
+        }, 10);
+
+        // Add the Cactus CSS animation dynamically to avoid it running before game start
+        const styleSheet = document.createElement("style");
+        styleSheet.innerText = `
+            @keyframes cactusMove {
+                0% { left: 600px; }
+                100% { left: -20px; }
+            }
+        `;
+        document.head.appendChild(styleSheet);
+
     </script>
 </body>
 </html>
