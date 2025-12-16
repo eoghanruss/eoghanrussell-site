@@ -205,6 +205,17 @@
         
         .project-logo { width: 100px; height: auto; margin-bottom: 20px; object-fit: contain; }
         
+        /* Disabled Button Style */
+        .btn-locked {
+            background: rgba(128, 128, 128, 0.2) !important;
+            color: var(--text-muted) !important;
+            border: 1px solid var(--glass-border) !important;
+            cursor: not-allowed !important;
+            opacity: 0.7;
+            box-shadow: none !important;
+            pointer-events: none;
+        }
+
         /* =========================================
            8. TIMELINE
            ========================================= */
@@ -285,17 +296,6 @@
             .timeline-line { left: 10px; }
             .timeline-dot { left: 2px !important; }
         }
-
-        /* Disabled "Under Construction" Button */
-.btn-locked {
-    background: rgba(128, 128, 128, 0.2) !important;
-    color: var(--text-muted) !important;
-    border: 1px solid var(--glass-border) !important;
-    cursor: not-allowed !important; /* Shows a 'stop' symbol on hover */
-    opacity: 0.7;
-    box-shadow: none !important;
-    pointer-events: none; /* Ensures no clicks register */
-}
     </style>
 </head>
 <body id="top" data-theme="dark">
@@ -305,12 +305,11 @@
 
     <nav class="navbar glass">
         <div class="container nav-container">
-            <a href="/" class="logo">EOGHAN<span style="color:var(--accent-main)">.</span></a>
+            <a href="#" class="logo">EOGHAN<span style="color:var(--accent-main)">.</span></a>
             <ul class="nav-links">
-                <li><a href="#" class="nav-link" data-target="projects">Work</a></li>
-<li><a href="#" class="nav-link" data-target="about">Journey</a></li>
-<li><a href="#" class="nav-link" data-target="contact">Contact</a></li>
-
+                <li><a href="#projects" class="nav-link">Work</a></li>
+                <li><a href="#about" class="nav-link">Journey</a></li>
+                <li><a href="#contact" class="nav-link">Contact</a></li>
             </ul>
             <div class="nav-actions">
                 <a href="assets/CV_Eoghan_Russell.pdf" class="btn-cv" download><i class="fas fa-download"></i> CV</a>
@@ -331,8 +330,8 @@
                     sales administration, and internal communications, with a focus on creating smooth systems, clear messaging, and real results. Combines technical 
                     skill and practical experience to help teams work more efficiently and projects run seamlessly.</p><br>
                 <div class="cta-group">
-                    <a href="/#projects" class="btn btn-primary">View Work <i class="fas fa-arrow-right"></i></a>
-                    <a href="/#contact" class="btn btn-outline">Contact Me</a>
+                    <a href="#projects" class="btn btn-primary">View Work <i class="fas fa-arrow-right"></i></a>
+                    <a href="#contact" class="btn btn-outline">Contact Me</a>
                 </div>
             </div>
             <div class="hero-visual">
@@ -383,7 +382,7 @@
                         <div class="project-back" style="background-image: url('https://images.unsplash.com/photo-1541339907198-e08756dedf3f?q=80&w=600&auto=format&fit=crop');">
                             <h3>CampusNav</h3>
                             <p>CampusNav is a student-friendly navigation app designed to help first-year students easily find their way around campus.</p>
-                            <a href="/campusnav" class="btn" style="background:#fff; color:#000; margin-top:20px;">View Project</a>   
+                            <a href="campusnav/index.html" class="btn" style="background:#fff; color:#000; margin-top:20px;">View Case Study</a>
                         </div>
                     </div>
                 </div>
@@ -397,13 +396,7 @@
                         <div class="project-back" style="background-image: url('https://images.unsplash.com/photo-1519741497674-611481863552?q=80&w=600&auto=format&fit=crop');">
                             <h3>Celestial</h3>
                             <p>My Wedding Planner app helps couples organize every detail of their big day, from guest lists to seating charts.</p>
-
-
-                            
-                            <!-- <a href="/celestial" class="btn" style="background:#fff; color:#000; margin-top:20px;">View Project</a> -->
-<button class="btn btn-locked" style="margin-top:20px;" disabled>🔒 Under Construction</button>
-
-                            
+                            <button class="btn btn-locked" style="margin-top:20px;" disabled>🔒 Under Construction</button>
                         </div>
                     </div>
                 </div>
@@ -417,13 +410,7 @@
                         <div class="project-back" style="background-image: url('https://images.unsplash.com/photo-1517836357463-d25dfeac3438?q=80&w=600&auto=format&fit=crop');">
                             <h3>FitTrack</h3>
                             <p>FitTrack is a workout app that helps you plan, track, and level up your fitness routine.</p>
-<button class="btn btn-locked" style="margin-top:20px;" disabled>🔒 Under Construction</button>
-
-                            
-                            <!-- <a href="/fittrack" class="btn" style="background:#fff; color:#000; margin-top:20px;">View Project</a> -->
-
-
-                            
+                            <button class="btn btn-locked" style="margin-top:20px;" disabled>🔒 Under Construction</button>
                         </div>
                     </div>
                 </div>
@@ -524,20 +511,8 @@
     </div>
 
     <script>
-        // --- Custom Cursor ---
-        const cursorDot = document.querySelector('[data-cursor-dot]');
-        window.addEventListener('mousemove', function(e) {
-            cursorDot.style.left = `${e.clientX}px`;
-            cursorDot.style.top = `${e.clientY}px`;
-        });
-        const clickables = document.querySelectorAll('a, button, .chat-trigger, .project-card, .theme-toggle');
-        clickables.forEach(el => {
-            el.addEventListener('mouseenter', () => document.body.classList.add('hovering'));
-            el.addEventListener('mouseleave', () => document.body.classList.remove('hovering'));
-        });
-
-
-// --- AUTO-SCROLL FROM SUBPAGES ---
+        // --- 1. AUTO-SCROLL FROM SUBPAGES (IMPORTANT) ---
+        // This listens for the 'memory' we set on the other pages
         window.addEventListener('DOMContentLoaded', () => {
             const targetSection = sessionStorage.getItem('scrollTarget');
             if (targetSection) {
@@ -552,25 +527,42 @@
                 sessionStorage.removeItem('scrollTarget');
             }
         });
-        
-        // --- Scroll Progress ---
+
+        // --- 2. CUSTOM CURSOR & HOVER EFFECTS ---
+        const cursorDot = document.querySelector('[data-cursor-dot]');
+        window.addEventListener('mousemove', function(e) {
+            const posX = e.clientX;
+            const posY = e.clientY;
+            cursorDot.style.left = `${posX}px`;
+            cursorDot.style.top = `${posY}px`;
+        });
+        const clickables = document.querySelectorAll('a, button, .chat-trigger, .project-card, .theme-toggle');
+        clickables.forEach(el => {
+            el.addEventListener('mouseenter', () => document.body.classList.add('hovering'));
+            el.addEventListener('mouseleave', () => document.body.classList.remove('hovering'));
+        });
+
+        // --- 3. SCROLL PROGRESS BAR ---
         window.addEventListener('scroll', () => {
             const winScroll = document.body.scrollTop || document.documentElement.scrollTop;
             const height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
             const scrolled = (winScroll / height) * 100;
             document.getElementById("scrollProgress").style.width = scrolled + "%";
+            
             const nav = document.querySelector('.navbar');
             if(window.scrollY > 50) nav.classList.add('scrolled');
             else nav.classList.remove('scrolled');
         });
 
-        // --- Theme Switcher ---
+        // --- 4. THEME SWITCHER ---
         const themeBtn = document.getElementById('theme-btn');
         const body = document.body;
         if(body.getAttribute('data-theme') === 'light') { themeBtn.innerHTML = '<i class="fas fa-moon"></i>'; } 
         else { themeBtn.innerHTML = '<i class="fas fa-sun"></i>'; }
+
         themeBtn.addEventListener('click', () => {
-            if(body.getAttribute('data-theme') === 'light') {
+            const currentTheme = body.getAttribute('data-theme');
+            if(currentTheme === 'light') {
                 body.setAttribute('data-theme', 'dark');
                 themeBtn.innerHTML = '<i class="fas fa-sun"></i>';
             } else {
@@ -579,12 +571,13 @@
             }
         });
 
-        // --- Typewriter ---
+        // --- 5. TYPEWRITER ---
         const textElement = document.getElementById('typewriter');
         const phrases = ["Eoghan Russell", "A Developer", "A Designer", "A Problem Solver"];
         let phraseIndex = 0;
         let charIndex = 0;
         let isDeleting = false;
+
         function typeEffect() {
             const currentPhrase = phrases[phraseIndex];
             if (isDeleting) {
@@ -597,17 +590,17 @@
             let typeSpeed = isDeleting ? 50 : 100;
             if (!isDeleting && charIndex === currentPhrase.length) {
                 isDeleting = true;
-                typeSpeed = 2000;
+                typeSpeed = 2000; // Pause for 2 seconds at the end
             } else if (isDeleting && charIndex === 0) {
                 isDeleting = false;
-                phraseIndex = (phraseIndex + 1) % phrases.length;
-                typeSpeed = 500;
+                phraseIndex = (phraseIndex + 1) % phrases.length; // Move to next phrase
+                typeSpeed = 500; // Pause before typing next
             }
             setTimeout(typeEffect, typeSpeed);
         }
         document.addEventListener('DOMContentLoaded', typeEffect);
 
-        // --- 3D Tilt ---
+        // --- 6. 3D TILT EFFECT ---
         const card = document.getElementById('tiltCard');
         document.addEventListener('mousemove', (e) => {
             if(window.innerWidth < 900) return;
@@ -616,7 +609,7 @@
             card.style.transform = `rotateY(${x}deg) rotateX(${y}deg)`;
         });
 
-        // --- Intersection Observer ---
+        // --- 7. SCROLL OBSERVER ---
         const observer = new IntersectionObserver((entries) => {
             entries.forEach(entry => {
                 if(entry.isIntersecting) entry.target.classList.add('show');
@@ -624,12 +617,13 @@
         });
         document.querySelectorAll('.timeline-item').forEach(el => observer.observe(el));
 
-        // --- Particles ---
+        // --- 8. PARTICLES (HEADER) ---
         const pCanvas = document.getElementById('particles-js');
         const pCtx = pCanvas.getContext('2d');
         pCanvas.width = window.innerWidth;
         pCanvas.height = window.innerHeight;
         let particles = [];
+
         class Particle {
             constructor() {
                 this.x = Math.random() * pCanvas.width;
@@ -639,37 +633,49 @@
                 this.speedY = Math.random() * 1 - 0.5;
             }
             update() {
-                this.x += this.speedX; this.y += this.speedY;
+                this.x += this.speedX;
+                this.y += this.speedY;
                 if(this.x > pCanvas.width || this.x < 0) this.speedX *= -1;
                 if(this.y > pCanvas.height || this.y < 0) this.speedY *= -1;
             }
             draw() {
                 const isLight = document.body.getAttribute('data-theme') === 'light';
                 pCtx.fillStyle = isLight ? 'rgba(2, 132, 199, 0.2)' : 'rgba(56, 189, 248, 0.2)';
-                pCtx.beginPath(); pCtx.arc(this.x, this.y, this.size, 0, Math.PI * 2); pCtx.fill();
+                pCtx.beginPath();
+                pCtx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+                pCtx.fill();
             }
         }
-        function initParticles() { particles = []; for(let j=0; j<50; j++) particles.push(new Particle()); }
+        function initParticles() {
+            particles = [];
+            for(let j=0; j<50; j++) particles.push(new Particle());
+        }
         function animateParticles() {
             pCtx.clearRect(0,0, pCanvas.width, pCanvas.height);
             particles.forEach(p => { p.update(); p.draw(); });
             requestAnimationFrame(animateParticles);
         }
-        initParticles(); animateParticles();
+        initParticles();
+        animateParticles();
 
-        // --- Matrix Footer ---
+        // --- 9. MATRIX RAIN (FOOTER) ---
         const mCanvas = document.getElementById('matrix-canvas');
         const mCtx = mCanvas.getContext('2d');
-        mCanvas.width = window.innerWidth; mCanvas.height = 300;
+        mCanvas.width = window.innerWidth;
+        mCanvas.height = 300; 
+        
         const letters = "01010101ABCDEFGHIJKLMNOPQRSTUVWXYZ";
         const fontSize = 14;
         const columns = mCanvas.width / fontSize;
         const drops = Array(Math.floor(columns)).fill(1);
+
         function drawMatrix() {
             const isLight = document.body.getAttribute('data-theme') === 'light';
             mCtx.fillStyle = isLight ? 'rgba(248, 250, 252, 0.1)' : 'rgba(15, 17, 21, 0.1)';
             mCtx.fillRect(0, 0, mCanvas.width, mCanvas.height);
-            mCtx.fillStyle = isLight ? '#0284c7' : '#38bdf8';
+            
+            mCtx.fillStyle = isLight ? '#0284c7' : '#38bdf8'; 
+
             mCtx.font = fontSize + "px monospace";
             for(let k=0; k<drops.length; k++) {
                 const text = letters.charAt(Math.floor(Math.random()*letters.length));
@@ -680,22 +686,19 @@
         }
         setInterval(drawMatrix, 50);
 
-        // --- 9. SMART CHAT WIDGET ---
+        // --- 10. SMART CHAT WIDGET ---
         const chatTrigger = document.getElementById('chatTrigger');
         const chatWindow = document.getElementById('chatWindow');
         const chatBody = document.getElementById('chatBody');
         const chatInput = document.getElementById('chatInput');
         const sendBtn = document.getElementById('sendBtn');
 
-        // Toggle Window
         chatTrigger.addEventListener('click', () => {
             chatWindow.style.display = chatWindow.style.display === 'flex' ? 'none' : 'flex';
         });
 
-        // Smart Response Logic
         function getBotResponse(input) {
             input = input.toLowerCase();
-
             if (input.includes("hello") || input.includes("hi") || input.includes("hey")) {
                 return "Hello! Thanks for visiting. Feel free to ask about my skills, projects, or how to contact me.";
             } 
@@ -722,17 +725,12 @@
             }
         }
 
-        // Handle Send
         function handleChat() {
             const userText = chatInput.value.trim();
             if (userText === "") return;
-
-            // 1. Add User Message
             chatBody.innerHTML += `<div class="chat-msg" style="align-self:flex-end; background:var(--accent-main); color:#fff;">${userText}</div>`;
             chatInput.value = '';
             chatBody.scrollTop = chatBody.scrollHeight;
-
-            // 2. Simulate "Thinking" Delay
             setTimeout(() => {
                 const botReply = getBotResponse(userText);
                 chatBody.innerHTML += `<div class="chat-msg bot">${botReply}</div>`;
@@ -740,34 +738,18 @@
             }, 600);
         }
 
-        // Event Listeners
         sendBtn.addEventListener('click', handleChat);
         chatInput.addEventListener('keypress', (e) => {
             if (e.key === 'Enter') handleChat();
         });
-
+        
+        // Handle Resize
         window.addEventListener('resize', () => {
             pCanvas.width = window.innerWidth;
+            pCanvas.height = window.innerHeight;
             mCanvas.width = window.innerWidth;
             initParticles();
         });
-        document.querySelectorAll('.nav-link').forEach(link => {
-    link.addEventListener('click', function(e) {
-        e.preventDefault(); // stop default link behavior
-        const targetId = this.getAttribute('data-target');
-        const targetEl = document.getElementById(targetId);
-        if(targetEl) {
-            targetEl.scrollIntoView({ behavior: 'smooth', block: 'start' });
-        }
-    });
-});
     </script>
 </body>
 </html>
-
-
-
-
-
-
-
